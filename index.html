@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hahababy 對照牆</title>
+<meta name="description" content="網友蒐集整理的 hahababy 與其他品牌相似設計對照圖">
+<style>
+
+:root {
+  color-scheme: light dark;
+  --bg: #faf7f2;
+  --bg-alt: #f1ece3;
+  --text: #2b2622;
+  --text-muted: #746b60;
+  --border: #e2d9cb;
+  --card-bg: #ffffff;
+  --accent: #c0432e;
+  --accent-soft: #f3dcd5;
+  --chip-bg: #ffffff;
+  --shadow: 0 1px 2px rgba(43,38,34,.06), 0 8px 24px rgba(43,38,34,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1a18;
+    --bg-alt: #242220;
+    --text: #f1ece4;
+    --text-muted: #a89e91;
+    --border: #38332c;
+    --card-bg: #262320;
+    --accent: #e2725b;
+    --accent-soft: #3a2620;
+    --chip-bg: #262320;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+.site-header {
+  padding: 56px 0 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.site-header h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: .01em;
+}
+.site-header .subtitle {
+  margin: 0 auto 16px;
+  max-width: 620px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.site-header .stats {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.site-header .stats strong { color: var(--accent); }
+
+.brand-filter {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  border: 1px solid var(--border);
+  background: var(--chip-bg);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.chip:hover { border-color: var(--accent); }
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+main { padding: 40px 0 20px; }
+
+.brand-group { margin-bottom: 48px; }
+.brand-group.is-hidden { display: none; }
+.brand-title {
+  font-size: 20px;
+  margin: 0 0 18px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.brand-title .count {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.card.is-hidden { display: none; }
+.card-image {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--bg-alt);
+  cursor: zoom-in;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .25s;
+}
+.card-image:hover img { transform: scale(1.03); }
+.card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card-item { margin: 0; font-size: 14px; }
+.card-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.card-link {
+  font-size: 12.5px;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent-soft);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+.card-link:hover { text-decoration: underline; }
+.card-link--muted {
+  color: var(--text-muted);
+  border-color: var(--border);
+  background: transparent;
+}
+.card-provider { margin: 0; font-size: 12px; color: var(--text-muted); }
+.card-provider a { color: var(--text-muted); }
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 60px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+  cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <h1>hahababy 對照牆</h1>
+    <p class="subtitle">網友自主蒐集整理的設計對照案例，供社會大眾檢視與討論。資料持續更新中。</p>
+    <p class="stats">共 <strong>21</strong> 筆案例・涉及 <strong>14</strong> 個品牌</p>
+  </div>
+</header>
+
+<nav class="brand-filter">
+  <div class="wrap chip-row"><button class="chip active" data-filter="all">全部（21）</button><button class="chip" data-filter="HELLO.SANFRANCISCO">HELLO.SANFRANCISCO（3）</button><button class="chip" data-filter="MARKEY&#x27;S">MARKEY&#x27;S（3）</button><button class="chip" data-filter="SOUSOU">SOUSOU（3）</button><button class="chip" data-filter="RODEO CROWNS WIDE BOWL">RODEO CROWNS WIDE BOWL（2）</button><button class="chip" data-filter="ADAM ET ROPÉ FEMME">ADAM ET ROPÉ FEMME（1）</button><button class="chip" data-filter="Bell Pony">Bell Pony（1）</button><button class="chip" data-filter="CECIL McBEE">CECIL McBEE（1）</button><button class="chip" data-filter="FIZZ">FIZZ（1）</button><button class="chip" data-filter="GRANIPH">GRANIPH（1）</button><button class="chip" data-filter="NICE CLAUP">NICE CLAUP（1）</button><button class="chip" data-filter="SHEIN">SHEIN（1）</button><button class="chip" data-filter="niko and...">niko and...（1）</button><button class="chip" data-filter="non-hedge">non-hedge（1）</button><button class="chip" data-filter="viga wang">viga wang（1）</button></div>
+</nav>
+
+<main class="wrap">
+    <section class="brand-group" data-brand="HELLO.SANFRANCISCO">
+      <h2 class="brand-title">HELLO.SANFRANCISCO <span class="count">3</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="HELLO.SANFRANCISCO">
+        <button class="card-image" data-full="images/743485143_17946576594238747_2433895902128456184_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743485143_17946576594238747_2433895902128456184_n.jpg" loading="lazy" alt="極簡系列-大人荷葉車邊喇叭長褲 vs イージーパンツ by HELLO.SANFRANCISCO（ZOZOTOWN販售）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">極簡系列-大人荷葉車邊喇叭長褲 vs イージーパンツ by HELLO.SANFRANCISCO（ZOZOTOWN販售）</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-大人荷葉車邊喇叭長褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="HELLO.SANFRANCISCO">
+        <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="華夫格荷葉喇叭褲（藍色）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">華夫格荷葉喇叭褲（藍色）</p>
+          <div class="card-links"><a class="card-link" href="https://www.palcloset.jp/display/item/CPZ1051502A0001/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="HELLO.SANFRANCISCO">
+        <button class="card-image" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="配色車線荷葉喇叭褲（黑色）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">配色車線荷葉喇叭褲（黑色）</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="MARKEY&#x27;S">
+      <h2 class="brand-title">MARKEY&#x27;S <span class="count">3</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="MARKEY&#x27;S">
+        <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="極簡系列-兒童三重紗細肩洋裝 vs Wガーゼキャミワンピース">
+        </button>
+        <div class="card-body">
+          <p class="card-item">極簡系列-兒童三重紗細肩洋裝 vs Wガーゼキャミワンピース</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-兒童三重紗細肩洋裝" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="MARKEY&#x27;S">
+        <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
+          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="荷葉邊削肩洋裝（橘色）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">荷葉邊削肩洋裝（橘色）</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="MARKEY&#x27;S">
+        <button class="card-image" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片">
+          <img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="荷葉邊削肩洋裝（粉紫色）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">荷葉邊削肩洋裝（粉紫色）</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="SOUSOU">
+      <h2 class="brand-title">SOUSOU <span class="count">3</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="SOUSOU">
+        <button class="card-image" data-full="images/743276473_17946576534238747_4729455529426863300_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="豹紋系列-大人短袖襯衫上衣 vs SOU・SOU 豹紋短袖上衣">
+        </button>
+        <div class="card-body">
+          <p class="card-item">豹紋系列-大人短袖襯衫上衣 vs SOU・SOU 豹紋短袖上衣</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/豹紋系列-大人短袖襯衫上衣" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="SOUSOU">
+        <button class="card-image" data-full="images/744871507_17946576504238747_278492017162679047_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="hahababy不鏽鋼保溫杯700ML vs sou.sou貓咪大象吸管杯">
+        </button>
+        <div class="card-body">
+          <p class="card-item">hahababy不鏽鋼保溫杯700ML vs sou.sou貓咪大象吸管杯</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/hahababy-不鏽鋼保溫杯-700ml" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="SOUSOU">
+        <button class="card-image" data-full="images/745476893_17946576549238747_4819686367354805490_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="hahababy x 富雨洋傘 抗UV自動折傘 vs SOU・SOU 自動開收傘">
+        </button>
+        <div class="card-body">
+          <p class="card-item">hahababy x 富雨洋傘 抗UV自動折傘 vs SOU・SOU 自動開收傘</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/hahababy-x-富雨洋傘-點點折傘" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="RODEO CROWNS WIDE BOWL">
+      <h2 class="brand-title">RODEO CROWNS WIDE BOWL <span class="count">2</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
+        <button class="card-image" data-full="images/743234554_18143626342496808_8970578222337513088_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="大蝴蝶結寬版牛仔褲">
+        </button>
+        <div class="card-body">
+          <p class="card-item">大蝴蝶結寬版牛仔褲</p>
+          <div class="card-links"><a class="card-link" href="https://www.ec-store.net/sws/g/g13711783/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
+        <button class="card-image" data-full="images/744661431_18143626318496808_5166149172784432878_n.webp" aria-label="放大檢視圖片">
+          <img src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="豹紋愛心印花T恤（KEEP MY HEART vs HAHA BABY）">
+        </button>
+        <div class="card-body">
+          <p class="card-item">豹紋愛心印花T恤（KEEP MY HEART vs HAHA BABY）</p>
+          <div class="card-links"><a class="card-link" href="https://www.ec-store.net/sws/g/g13613024/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="ADAM ET ROPÉ FEMME">
+      <h2 class="brand-title">ADAM ET ROPÉ FEMME <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="ADAM ET ROPÉ FEMME">
+        <button class="card-image" data-full="images/743270133_18143626369496808_1419109695452509172_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="泡泡接裙洋裝">
+        </button>
+        <div class="card-body">
+          <p class="card-item">泡泡接裙洋裝</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="Bell Pony">
+      <h2 class="brand-title">Bell Pony <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="Bell Pony">
+        <button class="card-image" data-full="images/743485140_17946576513238747_9080740350988763142_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="大人牛仔口袋七分寬褲 vs ビッグポケットデニムワイドパンツ(BPS-26818)">
+        </button>
+        <div class="card-body">
+          <p class="card-item">大人牛仔口袋七分寬褲 vs ビッグポケットデニムワイドパンツ(BPS-26818)</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人牛仔口袋七分寬褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="CECIL McBEE">
+      <h2 class="brand-title">CECIL McBEE <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="CECIL McBEE">
+        <button class="card-image" data-full="images/743658292_17946576591238747_5911415632409644333_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="Haha擁豹-大人短版上衣 vs CECIL McBEE by SUREVE Tシャツ">
+        </button>
+        <div class="card-body">
+          <p class="card-item">Haha擁豹-大人短版上衣 vs CECIL McBEE by SUREVE Tシャツ</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/haha擁豹-大人短版上衣" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="FIZZ">
+      <h2 class="brand-title">FIZZ <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="FIZZ">
+        <button class="card-image" data-full="images/743824503_17946576546238747_3633307376290467929_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743824503_17946576546238747_3633307376290467929_n.jpg" loading="lazy" alt="大人條紋蕾絲POLO短褲套裝 vs xw小瓦FIZZ韓國 條紋POLO套裝">
+        </button>
+        <div class="card-body">
+          <p class="card-item">大人條紋蕾絲POLO短褲套裝 vs xw小瓦FIZZ韓國 條紋POLO套裝</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人條紋蕾絲polo短褲套裝" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="GRANIPH">
+      <h2 class="brand-title">GRANIPH <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="GRANIPH">
+        <button class="card-image" data-full="images/744597057_17946576495238747_6719479828347954262_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="方領背心裙 vs graniph 貓咪點點拼接洋裝">
+        </button>
+        <div class="card-body">
+          <p class="card-item">方領背心裙 vs graniph 貓咪點點拼接洋裝</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/方領背心裙" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="NICE CLAUP">
+      <h2 class="brand-title">NICE CLAUP <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="NICE CLAUP">
+        <button class="card-image" data-full="images/743016960_18143626375496808_3929402441851809256_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="格紋泡泡袖上衣">
+        </button>
+        <div class="card-body">
+          <p class="card-item">格紋泡泡袖上衣</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="SHEIN">
+      <h2 class="brand-title">SHEIN <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="SHEIN">
+        <button class="card-image" data-full="images/743270735_17946576582238747_1795470978179967924_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743270735_17946576582238747_1795470978179967924_n.jpg" loading="lazy" alt="大蝴蝶結寬版牛仔長褲 vs Tween Girls Loose Fit Straight Leg Jeans (Bow)">
+        </button>
+        <div class="card-body">
+          <p class="card-item">大蝴蝶結寬版牛仔長褲 vs Tween Girls Loose Fit Straight Leg Jeans (Bow)</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大蝴蝶結寬版牛仔長褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="niko and...">
+      <h2 class="brand-title">niko and... <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="niko and...">
+        <button class="card-image" data-full="images/743187195_18143626390496808_4182319720125075395_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="雙色拼接直筒褲">
+        </button>
+        <div class="card-body">
+          <p class="card-item">雙色拼接直筒褲</p>
+          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="non-hedge">
+      <h2 class="brand-title">non-hedge <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="non-hedge">
+        <button class="card-image" data-full="images/745305180_17946576573238747_6145138480641477360_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="極簡系列-大人小蝴蝶結自帶安全褲短裙 vs リボンプルオーバー・スカートセットアップ">
+        </button>
+        <div class="card-body">
+          <p class="card-item">極簡系列-大人小蝴蝶結自帶安全褲短裙 vs リボンプルオーバー・スカートセットアップ</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-大人小蝴蝶結自帶安全褲短裙" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="brand-group" data-brand="viga wang">
+      <h2 class="brand-title">viga wang <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="viga wang">
+        <button class="card-image" data-full="images/743036055_17946576564238747_395982548523463037_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="大人側邊打褶丹寧寬版五分褲 vs viga wang 牛仔寬褲">
+        </button>
+        <div class="card-body">
+          <p class="card-item">大人側邊打褶丹寧寬版五分褲 vs viga wang 牛仔寬褲</p>
+          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人側邊打褶丹寧寬版五分褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>本頁內容由網友於 Threads 等公開社群自主蒐集、整理與提供，僅作為消費者知情與公共討論用途，不代表本站對任何品牌之侵權指控做出法律判斷。圖片著作權屬原拍攝者／品牌所有。如有錯誤或需下架，請聯繫更正。</p>
+  </div>
+</footer>
+
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+
+document.addEventListener('click', function (e) {
+  var chip = e.target.closest('.chip');
+  if (chip) {
+    var filter = chip.getAttribute('data-filter');
+    document.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
+    chip.classList.add('active');
+    document.querySelectorAll('.brand-group').forEach(function (section) {
+      section.classList.toggle('is-hidden', filter !== 'all' && section.getAttribute('data-brand') !== filter);
+    });
+    return;
+  }
+  var imgBtn = e.target.closest('.card-image');
+  if (imgBtn) {
+    var full = imgBtn.getAttribute('data-full');
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    lbImg.src = full;
+    lb.classList.add('is-open');
+    return;
+  }
+  if (e.target.closest('#lightbox')) {
+    document.getElementById('lightbox').classList.remove('is-open');
+  }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('is-open');
+});
+
+</script>
+</body>
+</html>
