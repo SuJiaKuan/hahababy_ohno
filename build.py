@@ -24,35 +24,56 @@ def esc(s):
     return html.escape((s or "").strip())
 
 
+def pair_row(label, name, url, css_class):
+    name = (name or "").strip()
+    url = (url or "").strip()
+    if not name and not url:
+        return ""
+    name_html = esc(name) if name else '<span class="pair-name--empty">（品名待補）</span>'
+    link_html = (
+        f'<a class="pair-link" href="{esc(url)}" target="_blank" rel="noopener">商品頁 ↗</a>'
+        if url else ""
+    )
+    return f"""
+          <div class="pair-row {css_class}">
+            <span class="pair-label">{label}</span>
+            <div class="pair-main">
+              <span class="pair-name">{name_html}</span>
+              {link_html}
+            </div>
+          </div>"""
+
+
 def card_html(row):
     img = esc(row["image"])
-    item = esc(row["item"])
-    brand_url = row.get("brand_product_url", "").strip()
-    haha_url = row.get("hahababy_product_url", "").strip()
+    brand = row["brand"]
+    brand_item = row.get("brand_item_name", "")
+    brand_url = row.get("brand_product_url", "")
+    haha_item = row.get("hahababy_item_name", "")
+    haha_url = row.get("hahababy_product_url", "")
     provider = esc(row.get("provider", ""))
-    note = row.get("note", "").strip()
+    provider_url = row.get("provider_url", "").strip()
 
-    links = []
-    if brand_url:
-        links.append(
-            f'<a class="card-link" href="{esc(brand_url)}" target="_blank" rel="noopener">品牌商品頁 ↗</a>'
-        )
-    if haha_url:
-        links.append(
-            f'<a class="card-link" href="{esc(haha_url)}" target="_blank" rel="noopener">hahababy 商品頁 ↗</a>'
-        )
-    links_html = "".join(links) if links else '<span class="card-link card-link--muted">尚未找到商品連結</span>'
+    alt = esc(f"{brand} vs hahababy：{haha_item or brand_item or ''}".strip())
 
-    provider_html = f'<a href="{esc(note)}" target="_blank" rel="noopener">@{provider}</a>' if note else f"@{provider}"
+    rows_html = pair_row("hahababy", haha_item, haha_url, "pair-haha") + \
+        pair_row(esc(brand), brand_item, brand_url, "pair-brand")
+    if not rows_html:
+        rows_html = '\n          <p class="pair-empty">尚未找到商品名稱與連結</p>'
+
+    provider_html = (
+        f'<a href="{esc(provider_url)}" target="_blank" rel="noopener">@{provider}</a>'
+        if provider_url else f"@{provider}"
+    )
 
     return f"""
       <article class="card" data-brand="{esc(row['brand'])}">
         <button class="card-image" data-full="images/{img}" aria-label="放大檢視圖片">
-          <img src="images/{img}" loading="lazy" alt="{item}">
+          <img src="images/{img}" loading="lazy" alt="{alt}">
         </button>
         <div class="card-body">
-          <p class="card-item">{item}</p>
-          <div class="card-links">{links_html}</div>
+          <div class="card-pair">{rows_html}
+          </div>
           <p class="card-provider">提供者：{provider_html}</p>
         </div>
       </article>"""
@@ -278,23 +299,50 @@ main { padding: 40px 0 20px; }
 }
 .card-image:hover img { transform: scale(1.03); }
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.card-item { margin: 0; font-size: 14px; }
-.card-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-.card-link {
-  font-size: 12.5px;
+
+.card-pair { display: flex; flex-direction: column; gap: 8px; }
+.pair-empty { margin: 0; font-size: 12.5px; color: var(--text-muted); }
+.pair-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+}
+.pair-row.pair-haha { border-color: var(--accent-soft); }
+.pair-label {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+.pair-haha .pair-label { color: var(--accent); border-color: var(--accent-soft); }
+.pair-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 2px;
+}
+.pair-name { font-size: 13.5px; line-height: 1.45; word-break: break-word; }
+.pair-name--empty { color: var(--text-muted); font-style: italic; font-size: 12px; }
+.pair-link {
+  font-size: 12px;
   color: var(--accent);
   text-decoration: none;
-  border: 1px solid var(--accent-soft);
-  background: var(--accent-soft);
-  padding: 4px 10px;
-  border-radius: 8px;
+  white-space: nowrap;
 }
-.card-link:hover { text-decoration: underline; }
-.card-link--muted {
-  color: var(--text-muted);
-  border-color: var(--border);
-  background: transparent;
-}
+.pair-link:hover { text-decoration: underline; }
+
 .card-provider { margin: 0; font-size: 12px; color: var(--text-muted); }
 .card-provider a { color: var(--text-muted); }
 

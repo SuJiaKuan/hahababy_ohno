@@ -151,23 +151,50 @@ main { padding: 40px 0 20px; }
 }
 .card-image:hover img { transform: scale(1.03); }
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.card-item { margin: 0; font-size: 14px; }
-.card-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-.card-link {
-  font-size: 12.5px;
+
+.card-pair { display: flex; flex-direction: column; gap: 8px; }
+.pair-empty { margin: 0; font-size: 12.5px; color: var(--text-muted); }
+.pair-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+}
+.pair-row.pair-haha { border-color: var(--accent-soft); }
+.pair-label {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+.pair-haha .pair-label { color: var(--accent); border-color: var(--accent-soft); }
+.pair-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 2px;
+}
+.pair-name { font-size: 13.5px; line-height: 1.45; word-break: break-word; }
+.pair-name--empty { color: var(--text-muted); font-style: italic; font-size: 12px; }
+.pair-link {
+  font-size: 12px;
   color: var(--accent);
   text-decoration: none;
-  border: 1px solid var(--accent-soft);
-  background: var(--accent-soft);
-  padding: 4px 10px;
-  border-radius: 8px;
+  white-space: nowrap;
 }
-.card-link:hover { text-decoration: underline; }
-.card-link--muted {
-  color: var(--text-muted);
-  border-color: var(--border);
-  background: transparent;
-}
+.pair-link:hover { text-decoration: underline; }
+
 .card-provider { margin: 0; font-size: 12px; color: var(--text-muted); }
 .card-provider a { color: var(--text-muted); }
 
@@ -218,31 +245,53 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="HELLO.SANFRANCISCO">
         <button class="card-image" data-full="images/743485143_17946576594238747_2433895902128456184_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743485143_17946576594238747_2433895902128456184_n.jpg" loading="lazy" alt="極簡系列-大人荷葉車邊喇叭長褲 vs イージーパンツ by HELLO.SANFRANCISCO（ZOZOTOWN販售）">
+          <img src="images/743485143_17946576594238747_2433895902128456184_n.jpg" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
         </button>
         <div class="card-body">
-          <p class="card-item">極簡系列-大人荷葉車邊喇叭長褲 vs イージーパンツ by HELLO.SANFRANCISCO（ZOZOTOWN販售）</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-大人荷葉車邊喇叭長褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">極簡系列-大人荷葉車邊喇叭長褲</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/極簡系列-大人荷葉車邊喇叭長褲" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">HELLO.SANFRANCISCO</span>
+            <div class="pair-main">
+              <span class="pair-name">イージーパンツ（ZOZOTOWN販售）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
       <article class="card" data-brand="HELLO.SANFRANCISCO">
         <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="華夫格荷葉喇叭褲（藍色）">
+          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：ワッフルフレアパンツ">
         </button>
         <div class="card-body">
-          <p class="card-item">華夫格荷葉喇叭褲（藍色）</p>
-          <div class="card-links"><a class="card-link" href="https://www.palcloset.jp/display/item/CPZ1051502A0001/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-brand">
+            <span class="pair-label">HELLO.SANFRANCISCO</span>
+            <div class="pair-main">
+              <span class="pair-name">ワッフルフレアパンツ</span>
+              <a class="pair-link" href="https://www.palcloset.jp/display/item/CPZ1051502A0001/" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
       <article class="card" data-brand="HELLO.SANFRANCISCO">
         <button class="card-image" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="配色車線荷葉喇叭褲（黑色）">
+          <img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">配色車線荷葉喇叭褲（黑色）</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -253,31 +302,47 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="MARKEY&#x27;S">
         <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="極簡系列-兒童三重紗細肩洋裝 vs Wガーゼキャミワンピース">
+          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
         </button>
         <div class="card-body">
-          <p class="card-item">極簡系列-兒童三重紗細肩洋裝 vs Wガーゼキャミワンピース</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-兒童三重紗細肩洋裝" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">極簡系列-兒童三重紗細肩洋裝</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/極簡系列-兒童三重紗細肩洋裝" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">MARKEY&#x27;S</span>
+            <div class="pair-main">
+              <span class="pair-name">Wガーゼキャミワンピース</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
       <article class="card" data-brand="MARKEY&#x27;S">
         <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
-          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="荷葉邊削肩洋裝（橘色）">
+          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">荷葉邊削肩洋裝（橘色）</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
       <article class="card" data-brand="MARKEY&#x27;S">
         <button class="card-image" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片">
-          <img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="荷葉邊削肩洋裝（粉紫色）">
+          <img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">荷葉邊削肩洋裝（粉紫色）</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -288,31 +353,66 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="SOUSOU">
         <button class="card-image" data-full="images/743276473_17946576534238747_4729455529426863300_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="豹紋系列-大人短袖襯衫上衣 vs SOU・SOU 豹紋短袖上衣">
+          <img src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="SOUSOU vs hahababy：豹紋系列-大人短袖襯衫上衣">
         </button>
         <div class="card-body">
-          <p class="card-item">豹紋系列-大人短袖襯衫上衣 vs SOU・SOU 豹紋短袖上衣</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/豹紋系列-大人短袖襯衫上衣" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">豹紋系列-大人短袖襯衫上衣</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/豹紋系列-大人短袖襯衫上衣" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
       <article class="card" data-brand="SOUSOU">
         <button class="card-image" data-full="images/744871507_17946576504238747_278492017162679047_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="hahababy不鏽鋼保溫杯700ML vs sou.sou貓咪大象吸管杯">
+          <img src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="SOUSOU vs hahababy：hahababy 不鏽鋼保溫杯 700ML">
         </button>
         <div class="card-body">
-          <p class="card-item">hahababy不鏽鋼保溫杯700ML vs sou.sou貓咪大象吸管杯</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/hahababy-不鏽鋼保溫杯-700ml" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">hahababy 不鏽鋼保溫杯 700ML</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/hahababy-不鏽鋼保溫杯-700ml" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">SOUSOU</span>
+            <div class="pair-main">
+              <span class="pair-name">coco美樂蒂冷水壺／Mr.wish聯名 sou.sou貓咪大象吸管杯（蝦皮）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
       <article class="card" data-brand="SOUSOU">
         <button class="card-image" data-full="images/745476893_17946576549238747_4819686367354805490_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="hahababy x 富雨洋傘 抗UV自動折傘 vs SOU・SOU 自動開收傘">
+          <img src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="SOUSOU vs hahababy：hahababy x 富雨洋傘 抗UV自動折傘">
         </button>
         <div class="card-body">
-          <p class="card-item">hahababy x 富雨洋傘 抗UV自動折傘 vs SOU・SOU 自動開收傘</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/hahababy-x-富雨洋傘-點點折傘" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">hahababy x 富雨洋傘 抗UV自動折傘</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/hahababy-x-富雨洋傘-點點折傘" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">SOUSOU</span>
+            <div class="pair-main">
+              <span class="pair-name">SOU SOU sousou 自動開收傘（五十音歌／紙之森）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -323,21 +423,42 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
         <button class="card-image" data-full="images/743234554_18143626342496808_8970578222337513088_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="大蝴蝶結寬版牛仔褲">
+          <img src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：ビッグリボンデニムパンツ">
         </button>
         <div class="card-body">
-          <p class="card-item">大蝴蝶結寬版牛仔褲</p>
-          <div class="card-links"><a class="card-link" href="https://www.ec-store.net/sws/g/g13711783/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-brand">
+            <span class="pair-label">RODEO CROWNS WIDE BOWL</span>
+            <div class="pair-main">
+              <span class="pair-name">ビッグリボンデニムパンツ</span>
+              <a class="pair-link" href="https://www.ec-store.net/sws/g/g13711783/" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
         <button class="card-image" data-full="images/744661431_18143626318496808_5166149172784432878_n.webp" aria-label="放大檢視圖片">
-          <img src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="豹紋愛心印花T恤（KEEP MY HEART vs HAHA BABY）">
+          <img src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：Haha擁豹-大人短版上衣">
         </button>
         <div class="card-body">
-          <p class="card-item">豹紋愛心印花T恤（KEEP MY HEART vs HAHA BABY）</p>
-          <div class="card-links"><a class="card-link" href="https://www.ec-store.net/sws/g/g13613024/" target="_blank" rel="noopener">品牌商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">Haha擁豹-大人短版上衣</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/haha擁豹-大人短版上衣" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">RODEO CROWNS WIDE BOWL</span>
+            <div class="pair-main">
+              <span class="pair-name">Heart Leopard Tシャツ</span>
+              <a class="pair-link" href="https://www.ec-store.net/sws/g/g13613024/" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -348,11 +469,12 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="ADAM ET ROPÉ FEMME">
         <button class="card-image" data-full="images/743270133_18143626369496808_1419109695452509172_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="泡泡接裙洋裝">
+          <img src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="ADAM ET ROPÉ FEMME vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">泡泡接裙洋裝</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -363,11 +485,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="Bell Pony">
         <button class="card-image" data-full="images/743485140_17946576513238747_9080740350988763142_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="大人牛仔口袋七分寬褲 vs ビッグポケットデニムワイドパンツ(BPS-26818)">
+          <img src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="Bell Pony vs hahababy：大人牛仔口袋七分寬褲">
         </button>
         <div class="card-body">
-          <p class="card-item">大人牛仔口袋七分寬褲 vs ビッグポケットデニムワイドパンツ(BPS-26818)</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人牛仔口袋七分寬褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">大人牛仔口袋七分寬褲</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/大人牛仔口袋七分寬褲" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">Bell Pony</span>
+            <div class="pair-main">
+              <span class="pair-name">ビッグポケット デニムワイドパンツ（BPS-26818）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -378,11 +514,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="CECIL McBEE">
         <button class="card-image" data-full="images/743658292_17946576591238747_5911415632409644333_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="Haha擁豹-大人短版上衣 vs CECIL McBEE by SUREVE Tシャツ">
+          <img src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="CECIL McBEE vs hahababy：Haha擁豹-大人短版上衣">
         </button>
         <div class="card-body">
-          <p class="card-item">Haha擁豹-大人短版上衣 vs CECIL McBEE by SUREVE Tシャツ</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/haha擁豹-大人短版上衣" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">Haha擁豹-大人短版上衣</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/haha擁豹-大人短版上衣" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">CECIL McBEE</span>
+            <div class="pair-main">
+              <span class="pair-name">CECIL McBEE by SUREVE Short Sleeve T-Shirt（Mercari二手商品）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -393,11 +543,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="FIZZ">
         <button class="card-image" data-full="images/743824503_17946576546238747_3633307376290467929_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743824503_17946576546238747_3633307376290467929_n.jpg" loading="lazy" alt="大人條紋蕾絲POLO短褲套裝 vs xw小瓦FIZZ韓國 條紋POLO套裝">
+          <img src="images/743824503_17946576546238747_3633307376290467929_n.jpg" loading="lazy" alt="FIZZ vs hahababy：大人條紋蕾絲POLO短褲套裝">
         </button>
         <div class="card-body">
-          <p class="card-item">大人條紋蕾絲POLO短褲套裝 vs xw小瓦FIZZ韓國 條紋POLO套裝</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人條紋蕾絲polo短褲套裝" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">大人條紋蕾絲POLO短褲套裝</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/大人條紋蕾絲polo短褲套裝" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">FIZZ</span>
+            <div class="pair-main">
+              <span class="pair-name">xw小瓦FIZZ韓國 條紋POLO套裝（淘寶）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -408,11 +572,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="GRANIPH">
         <button class="card-image" data-full="images/744597057_17946576495238747_6719479828347954262_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="方領背心裙 vs graniph 貓咪點點拼接洋裝">
+          <img src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="GRANIPH vs hahababy：方領背心裙">
         </button>
         <div class="card-body">
-          <p class="card-item">方領背心裙 vs graniph 貓咪點點拼接洋裝</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/方領背心裙" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">方領背心裙</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/方領背心裙" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">GRANIPH</span>
+            <div class="pair-main">
+              <span class="pair-name">graniph 猫 ワンピース 黒 ドット切替（Mercari已售出）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -423,11 +601,12 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="NICE CLAUP">
         <button class="card-image" data-full="images/743016960_18143626375496808_3929402441851809256_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="格紋泡泡袖上衣">
+          <img src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="NICE CLAUP vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">格紋泡泡袖上衣</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -438,11 +617,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="SHEIN">
         <button class="card-image" data-full="images/743270735_17946576582238747_1795470978179967924_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743270735_17946576582238747_1795470978179967924_n.jpg" loading="lazy" alt="大蝴蝶結寬版牛仔長褲 vs Tween Girls Loose Fit Straight Leg Jeans (Bow)">
+          <img src="images/743270735_17946576582238747_1795470978179967924_n.jpg" loading="lazy" alt="SHEIN vs hahababy：大蝴蝶結寬版牛仔長褲">
         </button>
         <div class="card-body">
-          <p class="card-item">大蝴蝶結寬版牛仔長褲 vs Tween Girls Loose Fit Straight Leg Jeans (Bow)</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大蝴蝶結寬版牛仔長褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">大蝴蝶結寬版牛仔長褲</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/大蝴蝶結寬版牛仔長褲" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">SHEIN</span>
+            <div class="pair-main">
+              <span class="pair-name">Tween Girls&#x27; Loose Fit Straight Leg Jeans With Bow（Light Blue Denim）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -453,11 +646,12 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="niko and...">
         <button class="card-image" data-full="images/743187195_18143626390496808_4182319720125075395_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="雙色拼接直筒褲">
+          <img src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="niko and... vs hahababy：">
         </button>
         <div class="card-body">
-          <p class="card-item">雙色拼接直筒褲</p>
-          <div class="card-links"><span class="card-link card-link--muted">尚未找到商品連結</span></div>
+          <div class="card-pair">
+          <p class="pair-empty">尚未找到商品名稱與連結</p>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
@@ -468,11 +662,25 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="non-hedge">
         <button class="card-image" data-full="images/745305180_17946576573238747_6145138480641477360_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="極簡系列-大人小蝴蝶結自帶安全褲短裙 vs リボンプルオーバー・スカートセットアップ">
+          <img src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="non-hedge vs hahababy：極簡系列-大人小蝴蝶結自帶安全褲短裙">
         </button>
         <div class="card-body">
-          <p class="card-item">極簡系列-大人小蝴蝶結自帶安全褲短裙 vs リボンプルオーバー・スカートセットアップ</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/極簡系列-大人小蝴蝶結自帶安全褲短裙" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">極簡系列-大人小蝴蝶結自帶安全褲短裙</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/極簡系列-大人小蝴蝶結自帶安全褲短裙" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">non-hedge</span>
+            <div class="pair-main">
+              <span class="pair-name">リボンプルオーバー・スカートセットアップ（ブラック）</span>
+              
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
@@ -483,11 +691,18 @@ main { padding: 40px 0 20px; }
       <div class="cards-grid">
       <article class="card" data-brand="viga wang">
         <button class="card-image" data-full="images/743036055_17946576564238747_395982548523463037_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="大人側邊打褶丹寧寬版五分褲 vs viga wang 牛仔寬褲">
+          <img src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="viga wang vs hahababy：大人側邊打褶丹寧寬版五分褲">
         </button>
         <div class="card-body">
-          <p class="card-item">大人側邊打褶丹寧寬版五分褲 vs viga wang 牛仔寬褲</p>
-          <div class="card-links"><a class="card-link" href="https://www.hahababyselect.com/products/大人側邊打褶丹寧寬版五分褲" target="_blank" rel="noopener">hahababy 商品頁 ↗</a></div>
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">大人側邊打褶丹寧寬版五分褲</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/大人側邊打褶丹寧寬版五分褲" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
           <p class="card-provider">提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
