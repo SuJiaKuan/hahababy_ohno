@@ -165,11 +165,11 @@ def build():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hahababy 對照牆</title>
+<title>hahababy 撞臉全紀錄</title>
 <meta name="description" content="網友蒐集整理的 hahababy 與其他品牌相似設計對照圖">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&text=%E5%85%A8%E7%B6%B2%E7%98%8B%E5%82%B3%EF%BC%9A%E6%92%9E%E8%87%89%E7%B4%80%E9%8C%84&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&text=%E6%92%9E%E8%87%89%E5%85%A8%E7%B4%80%E9%8C%84&display=swap" rel="stylesheet">
 <style>
 {CSS}
 </style>
@@ -177,7 +177,7 @@ def build():
 <body>
 <header class="site-header">
   <div class="wrap">
-    <h1 class="tabloid-headline">全網瘋傳：hahababy 撞臉全紀錄</h1>
+    <h1 class="tabloid-headline">hahababy 撞臉全紀錄</h1>
     <p class="tabloid-deck">越比對，越眼熟？</p>
   </div>
   <div class="tabloid-band">眼尖網友回報中，持續更新</div>
