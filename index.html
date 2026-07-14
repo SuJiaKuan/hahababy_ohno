@@ -117,28 +117,41 @@ main { padding: 40px 0 20px; }
 .card.is-hidden { display: none; }
 .card-image {
   position: relative;
-  display: block;
   width: 100%;
-  padding: 0;
-  border: 0;
-  background: var(--bg-alt);
-  cursor: zoom-in;
   aspect-ratio: 3 / 4;
   overflow: hidden;
+  background: var(--bg-alt);
+  touch-action: pan-y;
+  user-select: none;
 }
-.card-image img {
+.slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform .25s;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
 }
-.card-image:hover img { transform: scale(1.03); }
+.slide.is-active { opacity: 1; }
+.cover-btn {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
 .brand-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 1;
+  z-index: 2;
   background: rgba(28, 26, 24, .78);
   color: #fff;
   font-size: 12px;
@@ -153,25 +166,50 @@ main { padding: 40px 0 20px; }
   white-space: nowrap;
 }
 
-.thumb-row {
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 18, 16, .55);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.carousel-arrow:hover { background: rgba(20, 18, 16, .8); }
+.carousel-arrow.prev { left: 8px; }
+.carousel-arrow.next { right: 8px; }
+
+.carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 3;
+  transform: translateX(-50%);
   display: flex;
   gap: 6px;
-  padding: 10px 16px 0;
-  overflow-x: auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(20, 18, 16, .45);
 }
-.thumb {
-  flex: 0 0 auto;
-  width: 44px;
-  aspect-ratio: 3 / 4;
+.dot {
+  width: 6px;
+  height: 6px;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--bg-alt);
-  cursor: zoom-in;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  cursor: pointer;
 }
-.thumb:hover { border-color: var(--accent); }
-.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dot.is-active { background: #fff; }
 
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
@@ -245,7 +283,51 @@ main { padding: 40px 0 20px; }
   max-height: 100%;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  touch-action: pan-y;
+  user-select: none;
 }
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.lightbox.has-multi .lightbox-arrow { display: flex; }
+.lightbox-arrow:hover { background: rgba(255, 255, 255, .25); }
+.lightbox-arrow.prev { left: 16px; }
+.lightbox-arrow.next { right: 16px; }
+.lightbox-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: none;
+  gap: 8px;
+}
+.lightbox.has-multi .lightbox-dots { display: flex; }
+.lightbox-dots .lb-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .4);
+  cursor: pointer;
+}
+.lightbox-dots .lb-dot.is-active { background: #fff; }
 
 </style>
 </head>
@@ -265,10 +347,11 @@ main { padding: 40px 0 20px; }
 <main class="wrap">
   <div class="cards-grid">
       <article class="card" data-brand="SOU・SOU">
-        <button class="card-image" data-full="images/743276473_17946576534238747_4729455529426863300_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">SOU・SOU</span>
-          <img src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：豹紋系列-大人短袖襯衫上衣">
-        </button>
+          <img class="slide is-active" src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：豹紋系列-大人短袖襯衫上衣">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -290,10 +373,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="SOU・SOU">
-        <button class="card-image" data-full="images/744871507_17946576504238747_278492017162679047_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">SOU・SOU</span>
-          <img src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy 不鏽鋼保溫杯 700ML">
-        </button>
+          <img class="slide is-active" src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy 不鏽鋼保溫杯 700ML">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -315,10 +399,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="SOU・SOU">
-        <button class="card-image" data-full="images/745476893_17946576549238747_4819686367354805490_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">SOU・SOU</span>
-          <img src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy x 富雨洋傘 抗UV自動折傘">
-        </button>
+          <img class="slide is-active" src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy x 富雨洋傘 抗UV自動折傘">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -340,11 +425,14 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="MARKEY&#x27;S">
-        <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">MARKEY&#x27;S</span>
-          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
-        </button>
-        <div class="thumb-row"><button class="thumb" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片"><img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝"></button></div>
+          <img class="slide is-active" src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝"><img class="slide" src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+          <button class="carousel-arrow prev" aria-label="上一張">‹</button>
+          <button class="carousel-arrow next" aria-label="下一張">›</button>
+          <div class="carousel-dots"><button class="dot is-active" data-index="0" aria-label="第 1 張圖"></button><button class="dot" data-index="1" aria-label="第 2 張圖"></button></div>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -366,10 +454,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="MARKEY&#x27;S">
-        <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">MARKEY&#x27;S</span>
-          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-大人三重紗細肩洋裝">
-        </button>
+          <img class="slide is-active" src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-大人三重紗細肩洋裝">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -391,10 +480,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
-        <button class="card-image" data-full="images/743234554_18143626342496808_8970578222337513088_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">RODEO CROWNS WIDE BOWL</span>
-          <img src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：大蝴蝶結寬版牛仔長褲">
-        </button>
+          <img class="slide is-active" src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：大蝴蝶結寬版牛仔長褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -416,10 +506,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
-        <button class="card-image" data-full="images/744661431_18143626318496808_5166149172784432878_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">RODEO CROWNS WIDE BOWL</span>
-          <img src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：Haha擁豹-大人落肩上衣">
-        </button>
+          <img class="slide is-active" src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：Haha擁豹-大人落肩上衣">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -441,10 +532,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="ADAM ET ROPÉ FEMME">
-        <button class="card-image" data-full="images/743270133_18143626369496808_1419109695452509172_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">ADAM ET ROPÉ FEMME</span>
-          <img src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="ADAM ET ROPÉ FEMME vs hahababy：極簡系列-短袖層次尼龍連身裙">
-        </button>
+          <img class="slide is-active" src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="ADAM ET ROPÉ FEMME vs hahababy：極簡系列-短袖層次尼龍連身裙">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -466,10 +558,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="BROWN THEATRE PRODUCTS">
-        <button class="card-image" data-full="images/744601498_18134085697560342_7945664842818033460_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">BROWN THEATRE PRODUCTS</span>
-          <img src="images/744601498_18134085697560342_7945664842818033460_n.jpg" loading="lazy" alt="BROWN THEATRE PRODUCTS vs hahababy：花瓣束口提包">
-        </button>
+          <img class="slide is-active" src="images/744601498_18134085697560342_7945664842818033460_n.jpg" loading="lazy" alt="BROWN THEATRE PRODUCTS vs hahababy：花瓣束口提包">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -491,10 +584,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="Bell Pony">
-        <button class="card-image" data-full="images/743485140_17946576513238747_9080740350988763142_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">Bell Pony</span>
-          <img src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="Bell Pony vs hahababy：大人牛仔口袋七分寬褲">
-        </button>
+          <img class="slide is-active" src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="Bell Pony vs hahababy：大人牛仔口袋七分寬褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -516,10 +610,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="CECIL McBEE">
-        <button class="card-image" data-full="images/743658292_17946576591238747_5911415632409644333_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">CECIL McBEE</span>
-          <img src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="CECIL McBEE vs hahababy：Haha擁豹-大人短版上衣">
-        </button>
+          <img class="slide is-active" src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="CECIL McBEE vs hahababy：Haha擁豹-大人短版上衣">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -541,10 +636,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="FIZZ">
-        <button class="card-image" data-full="images/743108585_18143492377496808_848348369416403277_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">FIZZ</span>
-          <img src="images/743108585_18143492377496808_848348369416403277_n.webp" loading="lazy" alt="FIZZ vs hahababy：大人條紋蕾絲POLO短褲套裝">
-        </button>
+          <img class="slide is-active" src="images/743108585_18143492377496808_848348369416403277_n.webp" loading="lazy" alt="FIZZ vs hahababy：大人條紋蕾絲POLO短褲套裝">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -559,10 +655,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="GRANIPH">
-        <button class="card-image" data-full="images/744597057_17946576495238747_6719479828347954262_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">GRANIPH</span>
-          <img src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="GRANIPH vs hahababy：方領背心裙">
-        </button>
+          <img class="slide is-active" src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="GRANIPH vs hahababy：方領背心裙">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -584,10 +681,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="GRL">
-        <button class="card-image" data-full="images/744141405_18134085688560342_5782343493279958191_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">GRL</span>
-          <img src="images/744141405_18134085688560342_5782343493279958191_n.jpg" loading="lazy" alt="GRL vs hahababy：綁帶層次蛋糕包">
-        </button>
+          <img class="slide is-active" src="images/744141405_18134085688560342_5782343493279958191_n.jpg" loading="lazy" alt="GRL vs hahababy：綁帶層次蛋糕包">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -609,11 +707,14 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="HELLO.SANFRANCISCO">
-        <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">HELLO.SANFRANCISCO</span>
-          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
-        </button>
-        <div class="thumb-row"><button class="thumb" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片"><img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲"></button></div>
+          <img class="slide is-active" src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲"><img class="slide" src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+          <button class="carousel-arrow prev" aria-label="上一張">‹</button>
+          <button class="carousel-arrow next" aria-label="下一張">›</button>
+          <div class="carousel-dots"><button class="dot is-active" data-index="0" aria-label="第 1 張圖"></button><button class="dot" data-index="1" aria-label="第 2 張圖"></button></div>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -635,10 +736,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="Mari&amp;co">
-        <button class="card-image" data-full="images/742581237_18143593864496808_525081955662715846_n.png" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">Mari&amp;co</span>
-          <img src="images/742581237_18143593864496808_525081955662715846_n.png" loading="lazy" alt="Mari&amp;co vs hahababy：大人蕾絲拼接花瓣短褲">
-        </button>
+          <img class="slide is-active" src="images/742581237_18143593864496808_525081955662715846_n.png" loading="lazy" alt="Mari&amp;co vs hahababy：大人蕾絲拼接花瓣短褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -653,10 +755,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="REAL STYLE">
-        <button class="card-image" data-full="images/747468487_17937980379271214_4765606769736215886_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">REAL STYLE</span>
-          <img src="images/747468487_17937980379271214_4765606769736215886_n.jpg" loading="lazy" alt="REAL STYLE vs hahababy：素色網紗-澎澎掛肩配飾">
-        </button>
+          <img class="slide is-active" src="images/747468487_17937980379271214_4765606769736215886_n.jpg" loading="lazy" alt="REAL STYLE vs hahababy：素色網紗-澎澎掛肩配飾">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -678,10 +781,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="RETRO GIRL">
-        <button class="card-image" data-full="images/743499026_17921025885402216_3382283555415317527_n.png" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">RETRO GIRL</span>
-          <img src="images/743499026_17921025885402216_3382283555415317527_n.png" loading="lazy" alt="RETRO GIRL vs hahababy：極簡系列-大人小蝴蝶結短版上衣">
-        </button>
+          <img class="slide is-active" src="images/743499026_17921025885402216_3382283555415317527_n.png" loading="lazy" alt="RETRO GIRL vs hahababy：極簡系列-大人小蝴蝶結短版上衣">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -703,10 +807,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="Viga Wang">
-        <button class="card-image" data-full="images/743036055_17946576564238747_395982548523463037_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">Viga Wang</span>
-          <img src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="Viga Wang vs hahababy：大人側邊打褶丹寧寬版五分褲">
-        </button>
+          <img class="slide is-active" src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="Viga Wang vs hahababy：大人側邊打褶丹寧寬版五分褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -728,10 +833,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="Wood Which Flows">
-        <button class="card-image" data-full="images/746729824_17937980343271214_1270673683778676903_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">Wood Which Flows</span>
-          <img src="images/746729824_17937980343271214_1270673683778676903_n.jpg" loading="lazy" alt="Wood Which Flows vs hahababy：絎縫斜背包">
-        </button>
+          <img class="slide is-active" src="images/746729824_17937980343271214_1270673683778676903_n.jpg" loading="lazy" alt="Wood Which Flows vs hahababy：絎縫斜背包">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -753,10 +859,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="niko and...">
-        <button class="card-image" data-full="images/743187195_18143626390496808_4182319720125075395_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">niko and...</span>
-          <img src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="niko and... vs hahababy：極簡系列-大人拼接牛仔寬褲">
-        </button>
+          <img class="slide is-active" src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="niko and... vs hahababy：極簡系列-大人拼接牛仔寬褲">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -778,10 +885,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="non-hedge">
-        <button class="card-image" data-full="images/745305180_17946576573238747_6145138480641477360_n.jpg" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">non-hedge</span>
-          <img src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="non-hedge vs hahababy：極簡系列-大人小蝴蝶結自帶安全褲短裙">
-        </button>
+          <img class="slide is-active" src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="non-hedge vs hahababy：極簡系列-大人小蝴蝶結自帶安全褲短裙">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -803,10 +911,11 @@ main { padding: 40px 0 20px; }
         </div>
       </article>
       <article class="card" data-brand="one after another NICE CLAUP">
-        <button class="card-image" data-full="images/743016960_18143626375496808_3929402441851809256_n.webp" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">one after another NICE CLAUP</span>
-          <img src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="one after another NICE CLAUP vs hahababy：極簡系列-細格泡泡短袖襯衫">
-        </button>
+          <img class="slide is-active" src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="one after another NICE CLAUP vs hahababy：極簡系列-細格泡泡短袖襯衫">
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>
+        </div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
@@ -837,10 +946,86 @@ main { padding: 40px 0 20px; }
 </footer>
 
 <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-arrow prev" aria-label="上一張">‹</button>
   <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-arrow next" aria-label="下一張">›</button>
+  <div id="lightbox-dots" class="lightbox-dots"></div>
 </div>
 
 <script>
+
+function showSlide(cardImage, index) {
+  var slides = cardImage.querySelectorAll('.slide');
+  var dots = cardImage.querySelectorAll('.dot');
+  if (!slides.length) return;
+  index = ((index % slides.length) + slides.length) % slides.length;
+  slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+  dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
+  cardImage.setAttribute('data-index', index);
+}
+
+var lightboxImages = [];
+var lightboxIndex = 0;
+
+function renderLightboxDots() {
+  var dotsEl = document.getElementById('lightbox-dots');
+  dotsEl.innerHTML = '';
+  lightboxImages.forEach(function (src, i) {
+    var b = document.createElement('button');
+    b.className = 'lb-dot' + (i === lightboxIndex ? ' is-active' : '');
+    b.setAttribute('data-index', i);
+    b.setAttribute('aria-label', '第 ' + (i + 1) + ' 張圖');
+    dotsEl.appendChild(b);
+  });
+}
+
+function showLightboxSlide(index) {
+  if (!lightboxImages.length) return;
+  lightboxIndex = ((index % lightboxImages.length) + lightboxImages.length) % lightboxImages.length;
+  document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
+  renderLightboxDots();
+}
+
+function openLightbox(images, startIndex) {
+  lightboxImages = images;
+  var lb = document.getElementById('lightbox');
+  lb.classList.toggle('has-multi', images.length > 1);
+  showLightboxSlide(startIndex || 0);
+  lb.classList.add('is-open');
+}
+
+var swipe = { x: 0, cardImage: null, moved: false };
+document.addEventListener('pointerdown', function (e) {
+  var ci = e.target.closest('.card-image');
+  swipe.cardImage = ci;
+  swipe.x = e.clientX;
+  swipe.moved = false;
+});
+document.addEventListener('pointerup', function (e) {
+  if (!swipe.cardImage) return;
+  var dx = e.clientX - swipe.x;
+  if (Math.abs(dx) > 40) {
+    var idx = parseInt(swipe.cardImage.getAttribute('data-index') || '0', 10);
+    showSlide(swipe.cardImage, dx < 0 ? idx + 1 : idx - 1);
+    swipe.moved = true;
+  }
+});
+
+var lbSwipe = { x: 0, active: false, moved: false };
+document.addEventListener('pointerdown', function (e) {
+  var lb = document.getElementById('lightbox');
+  lbSwipe.active = lb.classList.contains('is-open') && !!e.target.closest('#lightbox');
+  lbSwipe.x = e.clientX;
+  lbSwipe.moved = false;
+});
+document.addEventListener('pointerup', function (e) {
+  if (!lbSwipe.active) return;
+  var dx = e.clientX - lbSwipe.x;
+  if (Math.abs(dx) > 40) {
+    showLightboxSlide(lightboxIndex + (dx < 0 ? 1 : -1));
+    lbSwipe.moved = true;
+  }
+});
 
 document.addEventListener('click', function (e) {
   var chip = e.target.closest('.chip');
@@ -853,21 +1038,55 @@ document.addEventListener('click', function (e) {
     });
     return;
   }
-  var imgBtn = e.target.closest('.card-image, .thumb');
-  if (imgBtn) {
-    var full = imgBtn.getAttribute('data-full');
-    var lb = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lightbox-img');
-    lbImg.src = full;
-    lb.classList.add('is-open');
+
+  var prevBtn = e.target.closest('.carousel-arrow.prev');
+  if (prevBtn) {
+    var ci1 = prevBtn.closest('.card-image');
+    showSlide(ci1, parseInt(ci1.getAttribute('data-index') || '0', 10) - 1);
     return;
   }
+  var nextBtn = e.target.closest('.carousel-arrow.next');
+  if (nextBtn) {
+    var ci2 = nextBtn.closest('.card-image');
+    showSlide(ci2, parseInt(ci2.getAttribute('data-index') || '0', 10) + 1);
+    return;
+  }
+  var dot = e.target.closest('.dot');
+  if (dot) {
+    var ci3 = dot.closest('.card-image');
+    showSlide(ci3, parseInt(dot.getAttribute('data-index'), 10));
+    return;
+  }
+
+  var coverBtn = e.target.closest('.cover-btn');
+  if (coverBtn) {
+    if (swipe.moved) { swipe.moved = false; return; }
+    var ci4 = coverBtn.closest('.card-image');
+    var slideEls = ci4.querySelectorAll('.slide');
+    var srcs = Array.prototype.map.call(slideEls, function (s) { return s.getAttribute('src'); });
+    var activeIdx = parseInt(ci4.getAttribute('data-index') || '0', 10);
+    openLightbox(srcs, activeIdx);
+    return;
+  }
+
+  var lbPrev = e.target.closest('.lightbox-arrow.prev');
+  if (lbPrev) { showLightboxSlide(lightboxIndex - 1); return; }
+  var lbNext = e.target.closest('.lightbox-arrow.next');
+  if (lbNext) { showLightboxSlide(lightboxIndex + 1); return; }
+  var lbDot = e.target.closest('.lb-dot');
+  if (lbDot) { showLightboxSlide(parseInt(lbDot.getAttribute('data-index'), 10)); return; }
+
   if (e.target.closest('#lightbox')) {
+    if (lbSwipe.moved) { lbSwipe.moved = false; return; }
     document.getElementById('lightbox').classList.remove('is-open');
   }
 });
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('is-open');
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('is-open')) return;
+  if (e.key === 'Escape') { lb.classList.remove('is-open'); return; }
+  if (e.key === 'ArrowLeft') { showLightboxSlide(lightboxIndex - 1); return; }
+  if (e.key === 'ArrowRight') { showLightboxSlide(lightboxIndex + 1); return; }
 });
 
 </script>

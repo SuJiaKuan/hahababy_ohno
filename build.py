@@ -99,14 +99,21 @@ def card_html(case):
     if not rows_html:
         rows_html = '\n          <p class="pair-empty">尚未找到商品名稱與連結</p>'
 
-    thumbs_html = ""
+    slides_html = "".join(
+        f'<img class="slide{" is-active" if i == 0 else ""}" src="images/{esc(img)}" loading="lazy" alt="{alt}">'
+        for i, img in enumerate(images)
+    )
+
+    nav_html = ""
     if len(images) > 1:
-        thumbs = "".join(
-            f'<button class="thumb" data-full="images/{esc(img)}" aria-label="放大檢視圖片">'
-            f'<img src="images/{esc(img)}" loading="lazy" alt="{alt}"></button>'
-            for img in images[1:]
+        dots = "".join(
+            f'<button class="dot{" is-active" if i == 0 else ""}" data-index="{i}" aria-label="第 {i + 1} 張圖"></button>'
+            for i in range(len(images))
         )
-        thumbs_html = f'\n        <div class="thumb-row">{thumbs}</div>'
+        nav_html = f"""
+          <button class="carousel-arrow prev" aria-label="上一張">‹</button>
+          <button class="carousel-arrow next" aria-label="下一張">›</button>
+          <div class="carousel-dots">{dots}</div>"""
 
     sources_html = "、".join(
         (f'<a href="{esc(u)}" target="_blank" rel="noopener">@{esc(s)}</a>' if u else f"@{esc(s)}")
@@ -115,10 +122,11 @@ def card_html(case):
 
     return f"""
       <article class="card" data-brand="{esc(brand)}">
-        <button class="card-image" data-full="images/{cover}" aria-label="放大檢視圖片">
+        <div class="card-image" data-index="0">
           <span class="brand-badge">{esc(brand)}</span>
-          <img src="images/{cover}" loading="lazy" alt="{alt}">
-        </button>{thumbs_html}
+          {slides_html}
+          <button class="cover-btn" aria-label="放大檢視圖片"></button>{nav_html}
+        </div>
         <div class="card-body">
           <div class="card-pair">{rows_html}
           </div>
@@ -185,7 +193,10 @@ def build():
 </footer>
 
 <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-arrow prev" aria-label="上一張">‹</button>
   <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-arrow next" aria-label="下一張">›</button>
+  <div id="lightbox-dots" class="lightbox-dots"></div>
 </div>
 
 <script>
@@ -309,28 +320,41 @@ main { padding: 40px 0 20px; }
 .card.is-hidden { display: none; }
 .card-image {
   position: relative;
-  display: block;
   width: 100%;
-  padding: 0;
-  border: 0;
-  background: var(--bg-alt);
-  cursor: zoom-in;
   aspect-ratio: 3 / 4;
   overflow: hidden;
+  background: var(--bg-alt);
+  touch-action: pan-y;
+  user-select: none;
 }
-.card-image img {
+.slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform .25s;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
 }
-.card-image:hover img { transform: scale(1.03); }
+.slide.is-active { opacity: 1; }
+.cover-btn {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
 .brand-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 1;
+  z-index: 2;
   background: rgba(28, 26, 24, .78);
   color: #fff;
   font-size: 12px;
@@ -345,25 +369,50 @@ main { padding: 40px 0 20px; }
   white-space: nowrap;
 }
 
-.thumb-row {
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 18, 16, .55);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.carousel-arrow:hover { background: rgba(20, 18, 16, .8); }
+.carousel-arrow.prev { left: 8px; }
+.carousel-arrow.next { right: 8px; }
+
+.carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 3;
+  transform: translateX(-50%);
   display: flex;
   gap: 6px;
-  padding: 10px 16px 0;
-  overflow-x: auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(20, 18, 16, .45);
 }
-.thumb {
-  flex: 0 0 auto;
-  width: 44px;
-  aspect-ratio: 3 / 4;
+.dot {
+  width: 6px;
+  height: 6px;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--bg-alt);
-  cursor: zoom-in;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  cursor: pointer;
 }
-.thumb:hover { border-color: var(--accent); }
-.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dot.is-active { background: #fff; }
 
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
@@ -437,10 +486,127 @@ main { padding: 40px 0 20px; }
   max-height: 100%;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  touch-action: pan-y;
+  user-select: none;
 }
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.lightbox.has-multi .lightbox-arrow { display: flex; }
+.lightbox-arrow:hover { background: rgba(255, 255, 255, .25); }
+.lightbox-arrow.prev { left: 16px; }
+.lightbox-arrow.next { right: 16px; }
+.lightbox-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: none;
+  gap: 8px;
+}
+.lightbox.has-multi .lightbox-dots { display: flex; }
+.lightbox-dots .lb-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .4);
+  cursor: pointer;
+}
+.lightbox-dots .lb-dot.is-active { background: #fff; }
 """
 
 JS = """
+function showSlide(cardImage, index) {
+  var slides = cardImage.querySelectorAll('.slide');
+  var dots = cardImage.querySelectorAll('.dot');
+  if (!slides.length) return;
+  index = ((index % slides.length) + slides.length) % slides.length;
+  slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+  dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
+  cardImage.setAttribute('data-index', index);
+}
+
+var lightboxImages = [];
+var lightboxIndex = 0;
+
+function renderLightboxDots() {
+  var dotsEl = document.getElementById('lightbox-dots');
+  dotsEl.innerHTML = '';
+  lightboxImages.forEach(function (src, i) {
+    var b = document.createElement('button');
+    b.className = 'lb-dot' + (i === lightboxIndex ? ' is-active' : '');
+    b.setAttribute('data-index', i);
+    b.setAttribute('aria-label', '第 ' + (i + 1) + ' 張圖');
+    dotsEl.appendChild(b);
+  });
+}
+
+function showLightboxSlide(index) {
+  if (!lightboxImages.length) return;
+  lightboxIndex = ((index % lightboxImages.length) + lightboxImages.length) % lightboxImages.length;
+  document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
+  renderLightboxDots();
+}
+
+function openLightbox(images, startIndex) {
+  lightboxImages = images;
+  var lb = document.getElementById('lightbox');
+  lb.classList.toggle('has-multi', images.length > 1);
+  showLightboxSlide(startIndex || 0);
+  lb.classList.add('is-open');
+}
+
+var swipe = { x: 0, cardImage: null, moved: false };
+document.addEventListener('pointerdown', function (e) {
+  var ci = e.target.closest('.card-image');
+  swipe.cardImage = ci;
+  swipe.x = e.clientX;
+  swipe.moved = false;
+});
+document.addEventListener('pointerup', function (e) {
+  if (!swipe.cardImage) return;
+  var dx = e.clientX - swipe.x;
+  if (Math.abs(dx) > 40) {
+    var idx = parseInt(swipe.cardImage.getAttribute('data-index') || '0', 10);
+    showSlide(swipe.cardImage, dx < 0 ? idx + 1 : idx - 1);
+    swipe.moved = true;
+  }
+});
+
+var lbSwipe = { x: 0, active: false, moved: false };
+document.addEventListener('pointerdown', function (e) {
+  var lb = document.getElementById('lightbox');
+  lbSwipe.active = lb.classList.contains('is-open') && !!e.target.closest('#lightbox');
+  lbSwipe.x = e.clientX;
+  lbSwipe.moved = false;
+});
+document.addEventListener('pointerup', function (e) {
+  if (!lbSwipe.active) return;
+  var dx = e.clientX - lbSwipe.x;
+  if (Math.abs(dx) > 40) {
+    showLightboxSlide(lightboxIndex + (dx < 0 ? 1 : -1));
+    lbSwipe.moved = true;
+  }
+});
+
 document.addEventListener('click', function (e) {
   var chip = e.target.closest('.chip');
   if (chip) {
@@ -452,21 +618,55 @@ document.addEventListener('click', function (e) {
     });
     return;
   }
-  var imgBtn = e.target.closest('.card-image, .thumb');
-  if (imgBtn) {
-    var full = imgBtn.getAttribute('data-full');
-    var lb = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lightbox-img');
-    lbImg.src = full;
-    lb.classList.add('is-open');
+
+  var prevBtn = e.target.closest('.carousel-arrow.prev');
+  if (prevBtn) {
+    var ci1 = prevBtn.closest('.card-image');
+    showSlide(ci1, parseInt(ci1.getAttribute('data-index') || '0', 10) - 1);
     return;
   }
+  var nextBtn = e.target.closest('.carousel-arrow.next');
+  if (nextBtn) {
+    var ci2 = nextBtn.closest('.card-image');
+    showSlide(ci2, parseInt(ci2.getAttribute('data-index') || '0', 10) + 1);
+    return;
+  }
+  var dot = e.target.closest('.dot');
+  if (dot) {
+    var ci3 = dot.closest('.card-image');
+    showSlide(ci3, parseInt(dot.getAttribute('data-index'), 10));
+    return;
+  }
+
+  var coverBtn = e.target.closest('.cover-btn');
+  if (coverBtn) {
+    if (swipe.moved) { swipe.moved = false; return; }
+    var ci4 = coverBtn.closest('.card-image');
+    var slideEls = ci4.querySelectorAll('.slide');
+    var srcs = Array.prototype.map.call(slideEls, function (s) { return s.getAttribute('src'); });
+    var activeIdx = parseInt(ci4.getAttribute('data-index') || '0', 10);
+    openLightbox(srcs, activeIdx);
+    return;
+  }
+
+  var lbPrev = e.target.closest('.lightbox-arrow.prev');
+  if (lbPrev) { showLightboxSlide(lightboxIndex - 1); return; }
+  var lbNext = e.target.closest('.lightbox-arrow.next');
+  if (lbNext) { showLightboxSlide(lightboxIndex + 1); return; }
+  var lbDot = e.target.closest('.lb-dot');
+  if (lbDot) { showLightboxSlide(parseInt(lbDot.getAttribute('data-index'), 10)); return; }
+
   if (e.target.closest('#lightbox')) {
+    if (lbSwipe.moved) { lbSwipe.moved = false; return; }
     document.getElementById('lightbox').classList.remove('is-open');
   }
 });
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('is-open');
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('is-open')) return;
+  if (e.key === 'Escape') { lb.classList.remove('is-open'); return; }
+  if (e.key === 'ArrowLeft') { showLightboxSlide(lightboxIndex - 1); return; }
+  if (e.key === 'ArrowRight') { showLightboxSlide(lightboxIndex + 1); return; }
 });
 """
 
