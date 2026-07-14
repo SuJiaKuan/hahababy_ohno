@@ -100,27 +100,10 @@ body {
 
 main { padding: 40px 0 20px; }
 
-.brand-group { margin-bottom: 48px; }
-.brand-group.is-hidden { display: none; }
-.brand-title {
-  font-size: 20px;
-  margin: 0 0 18px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent);
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.brand-title .count {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
 }
 .card {
   background: var(--card-bg);
@@ -133,6 +116,7 @@ main { padding: 40px 0 20px; }
 }
 .card.is-hidden { display: none; }
 .card-image {
+  position: relative;
   display: block;
   width: 100%;
   padding: 0;
@@ -150,6 +134,24 @@ main { padding: 40px 0 20px; }
   transition: transform .25s;
 }
 .card-image:hover img { transform: scale(1.03); }
+.brand-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  background: rgba(28, 26, 24, .78);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  max-width: calc(100% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .thumb-row {
   display: flex;
@@ -261,11 +263,10 @@ main { padding: 40px 0 20px; }
 </nav>
 
 <main class="wrap">
-    <section class="brand-group" data-brand="SOU・SOU">
-      <h2 class="brand-title">SOU・SOU <span class="count">3</span></h2>
-      <div class="cards-grid">
+  <div class="cards-grid">
       <article class="card" data-brand="SOU・SOU">
         <button class="card-image" data-full="images/743276473_17946576534238747_4729455529426863300_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">SOU・SOU</span>
           <img src="images/743276473_17946576534238747_4729455529426863300_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：豹紋系列-大人短袖襯衫上衣">
         </button>
         <div class="card-body">
@@ -290,6 +291,7 @@ main { padding: 40px 0 20px; }
       </article>
       <article class="card" data-brand="SOU・SOU">
         <button class="card-image" data-full="images/744871507_17946576504238747_278492017162679047_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">SOU・SOU</span>
           <img src="images/744871507_17946576504238747_278492017162679047_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy 不鏽鋼保溫杯 700ML">
         </button>
         <div class="card-body">
@@ -314,6 +316,7 @@ main { padding: 40px 0 20px; }
       </article>
       <article class="card" data-brand="SOU・SOU">
         <button class="card-image" data-full="images/745476893_17946576549238747_4819686367354805490_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">SOU・SOU</span>
           <img src="images/745476893_17946576549238747_4819686367354805490_n.jpg" loading="lazy" alt="SOU・SOU vs hahababy：hahababy x 富雨洋傘 抗UV自動折傘">
         </button>
         <div class="card-body">
@@ -336,13 +339,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="MARKEY&#x27;S">
-      <h2 class="brand-title">MARKEY&#x27;S <span class="count">2</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="MARKEY&#x27;S">
         <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">MARKEY&#x27;S</span>
           <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
         </button>
         <div class="thumb-row"><button class="thumb" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片"><img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝"></button></div>
@@ -368,6 +367,7 @@ main { padding: 40px 0 20px; }
       </article>
       <article class="card" data-brand="MARKEY&#x27;S">
         <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">MARKEY&#x27;S</span>
           <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-大人三重紗細肩洋裝">
         </button>
         <div class="card-body">
@@ -390,13 +390,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="RODEO CROWNS WIDE BOWL">
-      <h2 class="brand-title">RODEO CROWNS WIDE BOWL <span class="count">2</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
         <button class="card-image" data-full="images/743234554_18143626342496808_8970578222337513088_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">RODEO CROWNS WIDE BOWL</span>
           <img src="images/743234554_18143626342496808_8970578222337513088_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：大蝴蝶結寬版牛仔長褲">
         </button>
         <div class="card-body">
@@ -421,6 +417,7 @@ main { padding: 40px 0 20px; }
       </article>
       <article class="card" data-brand="RODEO CROWNS WIDE BOWL">
         <button class="card-image" data-full="images/744661431_18143626318496808_5166149172784432878_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">RODEO CROWNS WIDE BOWL</span>
           <img src="images/744661431_18143626318496808_5166149172784432878_n.webp" loading="lazy" alt="RODEO CROWNS WIDE BOWL vs hahababy：Haha擁豹-大人落肩上衣">
         </button>
         <div class="card-body">
@@ -443,13 +440,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="ADAM ET ROPÉ FEMME">
-      <h2 class="brand-title">ADAM ET ROPÉ FEMME <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="ADAM ET ROPÉ FEMME">
         <button class="card-image" data-full="images/743270133_18143626369496808_1419109695452509172_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">ADAM ET ROPÉ FEMME</span>
           <img src="images/743270133_18143626369496808_1419109695452509172_n.webp" loading="lazy" alt="ADAM ET ROPÉ FEMME vs hahababy：極簡系列-短袖層次尼龍連身裙">
         </button>
         <div class="card-body">
@@ -472,13 +465,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="BROWN THEATRE PRODUCTS">
-      <h2 class="brand-title">BROWN THEATRE PRODUCTS <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="BROWN THEATRE PRODUCTS">
         <button class="card-image" data-full="images/744601498_18134085697560342_7945664842818033460_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">BROWN THEATRE PRODUCTS</span>
           <img src="images/744601498_18134085697560342_7945664842818033460_n.jpg" loading="lazy" alt="BROWN THEATRE PRODUCTS vs hahababy：花瓣束口提包">
         </button>
         <div class="card-body">
@@ -501,13 +490,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@kis88818188/post/Dassu9ciYJm" target="_blank" rel="noopener">@kis88818188</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="Bell Pony">
-      <h2 class="brand-title">Bell Pony <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="Bell Pony">
         <button class="card-image" data-full="images/743485140_17946576513238747_9080740350988763142_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">Bell Pony</span>
           <img src="images/743485140_17946576513238747_9080740350988763142_n.jpg" loading="lazy" alt="Bell Pony vs hahababy：大人牛仔口袋七分寬褲">
         </button>
         <div class="card-body">
@@ -530,13 +515,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="CECIL McBEE">
-      <h2 class="brand-title">CECIL McBEE <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="CECIL McBEE">
         <button class="card-image" data-full="images/743658292_17946576591238747_5911415632409644333_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">CECIL McBEE</span>
           <img src="images/743658292_17946576591238747_5911415632409644333_n.jpg" loading="lazy" alt="CECIL McBEE vs hahababy：Haha擁豹-大人短版上衣">
         </button>
         <div class="card-body">
@@ -559,13 +540,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="FIZZ">
-      <h2 class="brand-title">FIZZ <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="FIZZ">
         <button class="card-image" data-full="images/743108585_18143492377496808_848348369416403277_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">FIZZ</span>
           <img src="images/743108585_18143492377496808_848348369416403277_n.webp" loading="lazy" alt="FIZZ vs hahababy：大人條紋蕾絲POLO短褲套裝">
         </button>
         <div class="card-body">
@@ -581,13 +558,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DaoA5vME14z" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="GRANIPH">
-      <h2 class="brand-title">GRANIPH <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="GRANIPH">
         <button class="card-image" data-full="images/744597057_17946576495238747_6719479828347954262_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">GRANIPH</span>
           <img src="images/744597057_17946576495238747_6719479828347954262_n.jpg" loading="lazy" alt="GRANIPH vs hahababy：方領背心裙">
         </button>
         <div class="card-body">
@@ -610,13 +583,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="GRL">
-      <h2 class="brand-title">GRL <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="GRL">
         <button class="card-image" data-full="images/744141405_18134085688560342_5782343493279958191_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">GRL</span>
           <img src="images/744141405_18134085688560342_5782343493279958191_n.jpg" loading="lazy" alt="GRL vs hahababy：綁帶層次蛋糕包">
         </button>
         <div class="card-body">
@@ -639,13 +608,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@kis88818188/post/Dassu9ciYJm" target="_blank" rel="noopener">@kis88818188</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="HELLO.SANFRANCISCO">
-      <h2 class="brand-title">HELLO.SANFRANCISCO <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="HELLO.SANFRANCISCO">
         <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">HELLO.SANFRANCISCO</span>
           <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
         </button>
         <div class="thumb-row"><button class="thumb" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片"><img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲"></button></div>
@@ -669,13 +634,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="Mari&amp;co">
-      <h2 class="brand-title">Mari&amp;co <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="Mari&amp;co">
         <button class="card-image" data-full="images/742581237_18143593864496808_525081955662715846_n.png" aria-label="放大檢視圖片">
+          <span class="brand-badge">Mari&amp;co</span>
           <img src="images/742581237_18143593864496808_525081955662715846_n.png" loading="lazy" alt="Mari&amp;co vs hahababy：大人蕾絲拼接花瓣短褲">
         </button>
         <div class="card-body">
@@ -691,13 +652,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/Dao67Qzk_fw" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="REAL STYLE">
-      <h2 class="brand-title">REAL STYLE <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="REAL STYLE">
         <button class="card-image" data-full="images/747468487_17937980379271214_4765606769736215886_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">REAL STYLE</span>
           <img src="images/747468487_17937980379271214_4765606769736215886_n.jpg" loading="lazy" alt="REAL STYLE vs hahababy：素色網紗-澎澎掛肩配飾">
         </button>
         <div class="card-body">
@@ -720,13 +677,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@hatti0110_______/post/DauNEDbkefk" target="_blank" rel="noopener">@hatti0110_______</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="RETRO GIRL">
-      <h2 class="brand-title">RETRO GIRL <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="RETRO GIRL">
         <button class="card-image" data-full="images/743499026_17921025885402216_3382283555415317527_n.png" aria-label="放大檢視圖片">
+          <span class="brand-badge">RETRO GIRL</span>
           <img src="images/743499026_17921025885402216_3382283555415317527_n.png" loading="lazy" alt="RETRO GIRL vs hahababy：極簡系列-大人小蝴蝶結短版上衣">
         </button>
         <div class="card-body">
@@ -749,13 +702,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@loveaable999/post/Daoe1QbCWwd" target="_blank" rel="noopener">@loveaable999</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="Viga Wang">
-      <h2 class="brand-title">Viga Wang <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="Viga Wang">
         <button class="card-image" data-full="images/743036055_17946576564238747_395982548523463037_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">Viga Wang</span>
           <img src="images/743036055_17946576564238747_395982548523463037_n.jpg" loading="lazy" alt="Viga Wang vs hahababy：大人側邊打褶丹寧寬版五分褲">
         </button>
         <div class="card-body">
@@ -778,13 +727,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="Wood Which Flows">
-      <h2 class="brand-title">Wood Which Flows <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="Wood Which Flows">
         <button class="card-image" data-full="images/746729824_17937980343271214_1270673683778676903_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">Wood Which Flows</span>
           <img src="images/746729824_17937980343271214_1270673683778676903_n.jpg" loading="lazy" alt="Wood Which Flows vs hahababy：絎縫斜背包">
         </button>
         <div class="card-body">
@@ -807,13 +752,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@hatti0110_______/post/DauNEDbkefk" target="_blank" rel="noopener">@hatti0110_______</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="niko and...">
-      <h2 class="brand-title">niko and... <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="niko and...">
         <button class="card-image" data-full="images/743187195_18143626390496808_4182319720125075395_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">niko and...</span>
           <img src="images/743187195_18143626390496808_4182319720125075395_n.webp" loading="lazy" alt="niko and... vs hahababy：極簡系列-大人拼接牛仔寬褲">
         </button>
         <div class="card-body">
@@ -836,13 +777,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="non-hedge">
-      <h2 class="brand-title">non-hedge <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="non-hedge">
         <button class="card-image" data-full="images/745305180_17946576573238747_6145138480641477360_n.jpg" aria-label="放大檢視圖片">
+          <span class="brand-badge">non-hedge</span>
           <img src="images/745305180_17946576573238747_6145138480641477360_n.jpg" loading="lazy" alt="non-hedge vs hahababy：極簡系列-大人小蝴蝶結自帶安全褲短裙">
         </button>
         <div class="card-body">
@@ -865,13 +802,9 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
         </div>
       </article>
-      </div>
-    </section>
-    <section class="brand-group" data-brand="one after another NICE CLAUP">
-      <h2 class="brand-title">one after another NICE CLAUP <span class="count">1</span></h2>
-      <div class="cards-grid">
       <article class="card" data-brand="one after another NICE CLAUP">
         <button class="card-image" data-full="images/743016960_18143626375496808_3929402441851809256_n.webp" aria-label="放大檢視圖片">
+          <span class="brand-badge">one after another NICE CLAUP</span>
           <img src="images/743016960_18143626375496808_3929402441851809256_n.webp" loading="lazy" alt="one after another NICE CLAUP vs hahababy：極簡系列-細格泡泡短袖襯衫">
         </button>
         <div class="card-body">
@@ -894,8 +827,7 @@ main { padding: 40px 0 20px; }
           <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      </div>
-    </section>
+  </div>
 </main>
 
 <footer class="site-footer">
@@ -916,8 +848,8 @@ document.addEventListener('click', function (e) {
     var filter = chip.getAttribute('data-filter');
     document.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
     chip.classList.add('active');
-    document.querySelectorAll('.brand-group').forEach(function (section) {
-      section.classList.toggle('is-hidden', filter !== 'all' && section.getAttribute('data-brand') !== filter);
+    document.querySelectorAll('.card').forEach(function (card) {
+      card.classList.toggle('is-hidden', filter !== 'all' && card.getAttribute('data-brand') !== filter);
     });
     return;
   }

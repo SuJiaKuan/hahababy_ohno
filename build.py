@@ -116,6 +116,7 @@ def card_html(case):
     return f"""
       <article class="card" data-brand="{esc(brand)}">
         <button class="card-image" data-full="images/{cover}" aria-label="放大檢視圖片">
+          <span class="brand-badge">{esc(brand)}</span>
           <img src="images/{cover}" loading="lazy" alt="{alt}">
         </button>{thumbs_html}
         <div class="card-body">
@@ -145,16 +146,8 @@ def build():
             f'<button class="chip" data-filter="{esc(b)}">{esc(b)}（{len(by_brand[b])}）</button>'
         )
 
-    sections = []
-    for b in brand_order:
-        items = by_brand[b]
-        cards = "".join(card_html(c) for c in items)
-        sections.append(f"""
-    <section class="brand-group" data-brand="{esc(b)}">
-      <h2 class="brand-title">{esc(b)} <span class="count">{len(items)}</span></h2>
-      <div class="cards-grid">{cards}
-      </div>
-    </section>""")
+    # one continuous grid, same-brand cards kept adjacent via brand_order
+    cards = "".join(card_html(c) for b in brand_order for c in by_brand[b])
 
     html_out = f"""<!doctype html>
 <html lang="zh-Hant">
@@ -180,7 +173,9 @@ def build():
   <div class="wrap chip-row">{''.join(chips)}</div>
 </nav>
 
-<main class="wrap">{''.join(sections)}
+<main class="wrap">
+  <div class="cards-grid">{cards}
+  </div>
 </main>
 
 <footer class="site-footer">
@@ -297,27 +292,10 @@ body {
 
 main { padding: 40px 0 20px; }
 
-.brand-group { margin-bottom: 48px; }
-.brand-group.is-hidden { display: none; }
-.brand-title {
-  font-size: 20px;
-  margin: 0 0 18px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent);
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.brand-title .count {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
 }
 .card {
   background: var(--card-bg);
@@ -330,6 +308,7 @@ main { padding: 40px 0 20px; }
 }
 .card.is-hidden { display: none; }
 .card-image {
+  position: relative;
   display: block;
   width: 100%;
   padding: 0;
@@ -347,6 +326,24 @@ main { padding: 40px 0 20px; }
   transition: transform .25s;
 }
 .card-image:hover img { transform: scale(1.03); }
+.brand-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  background: rgba(28, 26, 24, .78);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  max-width: calc(100% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .thumb-row {
   display: flex;
@@ -450,8 +447,8 @@ document.addEventListener('click', function (e) {
     var filter = chip.getAttribute('data-filter');
     document.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
     chip.classList.add('active');
-    document.querySelectorAll('.brand-group').forEach(function (section) {
-      section.classList.toggle('is-hidden', filter !== 'all' && section.getAttribute('data-brand') !== filter);
+    document.querySelectorAll('.card').forEach(function (card) {
+      card.classList.toggle('is-hidden', filter !== 'all' && card.getAttribute('data-brand') !== filter);
     });
     return;
   }
