@@ -94,8 +94,10 @@ def card_html(case):
 
     alt = esc(f"{brand} vs hahababy：{haha_item or brand_item or ''}".strip())
 
-    rows_html = pair_row("hahababy", haha_item, haha_url, "pair-haha") + \
-        pair_row(esc(brand), brand_item, brand_url, "pair-brand")
+    haha_row = pair_row("hahababy", haha_item, haha_url, "pair-haha")
+    brand_row = pair_row(esc(brand), brand_item, brand_url, "pair-brand")
+    vs_html = '\n          <div class="vs-badge">VS</div>' if haha_row and brand_row else ""
+    rows_html = haha_row + vs_html + brand_row
     if not rows_html:
         rows_html = '\n          <p class="pair-empty">尚未找到商品名稱與連結</p>'
 
@@ -124,6 +126,7 @@ def card_html(case):
       <article class="card" data-brand="{esc(brand)}">
         <div class="card-image" data-index="0">
           <span class="brand-badge">{esc(brand)}</span>
+          <span class="suspect-ribbon">疑似</span>
           {slides_html}
           <button class="cover-btn" aria-label="放大檢視圖片"></button>{nav_html}
         </div>
@@ -164,6 +167,9 @@ def build():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>hahababy 對照牆</title>
 <meta name="description" content="網友蒐集整理的 hahababy 與其他品牌相似設計對照圖">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&text=%E5%85%A8%E7%B6%B2%E7%98%8B%E5%82%B3%EF%BC%9A%E6%92%9E%E8%87%89%E7%B4%80%E9%8C%84&display=swap" rel="stylesheet">
 <style>
 {CSS}
 </style>
@@ -171,11 +177,13 @@ def build():
 <body>
 <header class="site-header">
   <div class="wrap">
-    <h1>hahababy 對照牆</h1>
-    <p class="subtitle">本站彙整自 Threads 等公開社群上網友分享的設計對照案例，供社會大眾檢視與討論。<br>資料持續更新中。</p>
-    <div class="stats">
-      <div><strong>{total}</strong><span>筆案例</span></div>
-      <div><strong>{brand_count}</strong><span>個品牌</span></div>
+    <h1 class="tabloid-headline">全網瘋傳：hahababy 撞臉全紀錄</h1>
+    <p class="tabloid-deck">越比對，越眼熟？</p>
+  </div>
+  <div class="tabloid-band">眼尖網友回報中，持續更新</div>
+  <div class="tabloid-ticker">
+    <div class="wrap">
+      網友揪出 <strong>{total}</strong> 起，橫跨 <strong>{brand_count}</strong> 個品牌
     </div>
   </div>
 </header>
@@ -215,33 +223,35 @@ def build():
 CSS = """
 :root {
   color-scheme: light dark;
-  --bg: #f7f7f8;
-  --bg-alt: #eeeef1;
-  --text: #17171a;
-  --text-muted: #6c6c74;
-  --border: #e1e1e5;
+  --bg: #ffffff;
+  --bg-alt: #f4f4f4;
+  --text: #000000;
+  --text-muted: #4d4d4d;
+  --border: #000000;
   --card-bg: #ffffff;
-  --accent: #d81e3f;
-  --accent-strong: #d81e3f;
-  --accent-soft: #fbe3e7;
+  --accent: #e4002b;
+  --accent-strong: #e4002b;
+  --accent-soft: #ffe1e6;
+  --yellow: #fff200;
   --chip-bg: #ffffff;
-  --radius-lg: 16px;
-  --radius-md: 10px;
-  --shadow: 0 1px 2px rgba(15,15,18,.05), 0 10px 30px rgba(15,15,18,.07);
+  --radius-lg: 4px;
+  --radius-md: 3px;
+  --shadow: 0 2px 0 rgba(0,0,0,.9);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d0d0f;
-    --bg-alt: #1a1a1e;
-    --text: #f2f2f4;
-    --text-muted: #9c9ca3;
-    --border: #2a2a2f;
-    --card-bg: #19191c;
-    --accent: #ff5470;
-    --accent-strong: #d81e3f;
-    --accent-soft: #3a1620;
-    --chip-bg: #19191c;
-    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+    --bg: #0a0a0a;
+    --bg-alt: #161616;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
+    --border: #ffffff;
+    --card-bg: #161616;
+    --accent: #ff3355;
+    --accent-strong: #e4002b;
+    --accent-soft: #3a0e15;
+    --yellow: #fff200;
+    --chip-bg: #161616;
+    --shadow: 0 2px 0 rgba(255,255,255,.85);
   }
 }
 * { box-sizing: border-box; }
@@ -252,39 +262,65 @@ body {
   font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Segoe UI", Helvetica, Arial, sans-serif;
   line-height: 1.6;
 }
+mark {
+  background: var(--yellow);
+  color: var(--text);
+  padding: 0 .1em;
+}
 .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 
 .site-header {
-  padding: 52px 0 28px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-alt);
+  background: var(--bg);
+  padding-top: 32px;
 }
-.site-header h1 {
-  margin: 0 0 14px;
-  font-size: clamp(30px, 4.2vw, 44px);
-  font-weight: 800;
-  letter-spacing: -.01em;
-}
-.site-header .subtitle {
-  margin: 0 0 18px;
-  max-width: 560px;
-  color: var(--text-muted);
-  font-size: 15px;
-}
-.site-header .stats {
-  display: inline-flex;
-  gap: 20px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-.site-header .stats strong {
-  display: block;
-  font-size: 22px;
-  font-weight: 800;
+.site-header .wrap { padding-bottom: 22px; }
+.tabloid-headline {
+  margin: 0 0 12px;
+  font-family: "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
+  font-weight: 900;
+  font-size: clamp(30px, 6vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
   color: var(--text);
-  letter-spacing: -.01em;
 }
-.site-header .stats span { display: block; }
+.tabloid-deck {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 10px;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 800;
+  letter-spacing: .01em;
+  transform: rotate(-1.5deg);
+}
+.tabloid-band {
+  background: var(--yellow);
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  padding: 7px 24px;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+}
+.tabloid-ticker {
+  background: var(--text);
+  color: var(--bg);
+}
+.tabloid-ticker .wrap {
+  padding-top: 11px;
+  padding-bottom: 11px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.tabloid-ticker strong {
+  color: var(--accent);
+  font-size: 23px;
+  font-weight: 900;
+  margin: 0 2px;
+}
 
 .brand-filter {
   position: sticky;
@@ -304,13 +340,16 @@ body {
   background: var(--chip-bg);
   color: var(--text);
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .02em;
   cursor: pointer;
   white-space: nowrap;
-  transition: background .15s, color .15s, border-color .15s;
+  transition: background .15s, color .15s, border-color .15s, transform .15s;
 }
-.chip:hover { border-color: var(--accent); }
+.chip:hover { border-color: var(--accent); transform: translateY(-1px) rotate(-1deg); }
 .chip.active {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
@@ -326,12 +365,17 @@ main { padding: 40px 0 20px; }
 }
 .card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
+  transition: transform .15s, box-shadow .15s;
+}
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border);
 }
 .card.is-hidden { display: none; }
 .card-image {
@@ -371,18 +415,51 @@ main { padding: 40px 0 20px; }
   top: 10px;
   left: 10px;
   z-index: 2;
-  background: rgba(12, 12, 15, .78);
-  color: #fff;
+  background: #000;
+  color: var(--yellow);
+  border: 1.5px solid var(--yellow);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: .02em;
-  padding: 5px 10px;
-  border-radius: 999px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
-  max-width: calc(100% - 20px);
+  max-width: calc(100% - 60px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.suspect-ribbon {
+  position: absolute;
+  top: 16px;
+  right: -32px;
+  z-index: 2;
+  width: 128px;
+  padding: 3px 0;
+  background: var(--accent-strong);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-align: center;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,.35);
+  border-top: 1px solid rgba(255,255,255,.5);
+  border-bottom: 1px solid rgba(255,255,255,.5);
+}
+.vs-badge {
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  border: 2px solid var(--accent-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .carousel-arrow {
@@ -416,7 +493,7 @@ main { padding: 40px 0 20px; }
   display: flex;
   gap: 6px;
   padding: 5px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   background: rgba(12, 12, 15, .45);
 }
 .dot {
@@ -443,7 +520,10 @@ main { padding: 40px 0 20px; }
   background: var(--bg-alt);
   border: 1px solid var(--border);
 }
-.pair-row.pair-haha { border-color: var(--accent-soft); background: var(--accent-soft); }
+.pair-row.pair-haha {
+  border: 1.5px solid var(--accent-strong);
+  background: var(--accent-soft);
+}
 .pair-label {
   display: inline-block;
   align-self: flex-start;
@@ -454,10 +534,14 @@ main { padding: 40px 0 20px; }
   color: var(--text-muted);
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   padding: 1px 8px;
 }
-.pair-haha .pair-label { color: var(--accent); border-color: var(--accent-soft); }
+.pair-haha .pair-label {
+  color: #fff;
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
 .pair-main {
   display: flex;
   flex-wrap: wrap;
@@ -485,6 +569,11 @@ main { padding: 40px 0 20px; }
   font-size: 12.5px;
 }
 .site-footer a { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .chip, .card, .cover-btn img { transition: none; }
+  .chip:hover, .card:hover, .cover-btn:hover img { transform: none; }
+}
 
 .lightbox {
   position: fixed;
