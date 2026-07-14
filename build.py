@@ -51,8 +51,8 @@ def card_html(row):
     brand_url = row.get("brand_product_url", "")
     haha_item = row.get("hahababy_item_name", "")
     haha_url = row.get("hahababy_product_url", "")
-    provider = esc(row.get("provider", ""))
-    provider_url = row.get("provider_url", "").strip()
+    source = esc(row.get("source", ""))
+    source_url = row.get("source_url", "").strip()
 
     alt = esc(f"{brand} vs hahababy：{haha_item or brand_item or ''}".strip())
 
@@ -61,9 +61,9 @@ def card_html(row):
     if not rows_html:
         rows_html = '\n          <p class="pair-empty">尚未找到商品名稱與連結</p>'
 
-    provider_html = (
-        f'<a href="{esc(provider_url)}" target="_blank" rel="noopener">@{provider}</a>'
-        if provider_url else f"@{provider}"
+    source_html = (
+        f'<a href="{esc(source_url)}" target="_blank" rel="noopener">@{source}</a>'
+        if source_url else f"@{source}"
     )
 
     return f"""
@@ -74,7 +74,7 @@ def card_html(row):
         <div class="card-body">
           <div class="card-pair">{rows_html}
           </div>
-          <p class="card-provider">提供者：{provider_html}</p>
+          <p class="card-provider">來源/提供者：{source_html}</p>
         </div>
       </article>"""
 
