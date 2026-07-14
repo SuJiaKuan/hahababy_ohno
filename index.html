@@ -150,6 +150,27 @@ main { padding: 40px 0 20px; }
   transition: transform .25s;
 }
 .card-image:hover img { transform: scale(1.03); }
+
+.thumb-row {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px 0;
+  overflow-x: auto;
+}
+.thumb {
+  flex: 0 0 auto;
+  width: 44px;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-alt);
+  cursor: zoom-in;
+}
+.thumb:hover { border-color: var(--accent); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
 .card-pair { display: flex; flex-direction: column; gap: 8px; }
@@ -231,92 +252,15 @@ main { padding: 40px 0 20px; }
   <div class="wrap">
     <h1>hahababy 對照牆</h1>
     <p class="subtitle">網友自主蒐集整理的設計對照案例，供社會大眾檢視與討論。資料持續更新中。</p>
-    <p class="stats">共 <strong>25</strong> 筆案例・涉及 <strong>19</strong> 個品牌</p>
+    <p class="stats">共 <strong>23</strong> 筆案例・涉及 <strong>19</strong> 個品牌</p>
   </div>
 </header>
 
 <nav class="brand-filter">
-  <div class="wrap chip-row"><button class="chip active" data-filter="all">全部（25）</button><button class="chip" data-filter="MARKEY&#x27;S">MARKEY&#x27;S（3）</button><button class="chip" data-filter="SOU・SOU">SOU・SOU（3）</button><button class="chip" data-filter="HELLO.SANFRANCISCO">HELLO.SANFRANCISCO（2）</button><button class="chip" data-filter="RODEO CROWNS WIDE BOWL">RODEO CROWNS WIDE BOWL（2）</button><button class="chip" data-filter="ADAM ET ROPÉ FEMME">ADAM ET ROPÉ FEMME（1）</button><button class="chip" data-filter="BROWN THEATRE PRODUCTS">BROWN THEATRE PRODUCTS（1）</button><button class="chip" data-filter="Bell Pony">Bell Pony（1）</button><button class="chip" data-filter="CECIL McBEE">CECIL McBEE（1）</button><button class="chip" data-filter="FIZZ">FIZZ（1）</button><button class="chip" data-filter="GRANIPH">GRANIPH（1）</button><button class="chip" data-filter="GRL">GRL（1）</button><button class="chip" data-filter="Mari&amp;co">Mari&amp;co（1）</button><button class="chip" data-filter="REAL STYLE">REAL STYLE（1）</button><button class="chip" data-filter="RETRO GIRL">RETRO GIRL（1）</button><button class="chip" data-filter="Viga Wang">Viga Wang（1）</button><button class="chip" data-filter="Wood Which Flows">Wood Which Flows（1）</button><button class="chip" data-filter="niko and...">niko and...（1）</button><button class="chip" data-filter="non-hedge">non-hedge（1）</button><button class="chip" data-filter="one after another NICE CLAUP">one after another NICE CLAUP（1）</button></div>
+  <div class="wrap chip-row"><button class="chip active" data-filter="all">全部（23）</button><button class="chip" data-filter="SOU・SOU">SOU・SOU（3）</button><button class="chip" data-filter="MARKEY&#x27;S">MARKEY&#x27;S（2）</button><button class="chip" data-filter="RODEO CROWNS WIDE BOWL">RODEO CROWNS WIDE BOWL（2）</button><button class="chip" data-filter="ADAM ET ROPÉ FEMME">ADAM ET ROPÉ FEMME（1）</button><button class="chip" data-filter="BROWN THEATRE PRODUCTS">BROWN THEATRE PRODUCTS（1）</button><button class="chip" data-filter="Bell Pony">Bell Pony（1）</button><button class="chip" data-filter="CECIL McBEE">CECIL McBEE（1）</button><button class="chip" data-filter="FIZZ">FIZZ（1）</button><button class="chip" data-filter="GRANIPH">GRANIPH（1）</button><button class="chip" data-filter="GRL">GRL（1）</button><button class="chip" data-filter="HELLO.SANFRANCISCO">HELLO.SANFRANCISCO（1）</button><button class="chip" data-filter="Mari&amp;co">Mari&amp;co（1）</button><button class="chip" data-filter="REAL STYLE">REAL STYLE（1）</button><button class="chip" data-filter="RETRO GIRL">RETRO GIRL（1）</button><button class="chip" data-filter="Viga Wang">Viga Wang（1）</button><button class="chip" data-filter="Wood Which Flows">Wood Which Flows（1）</button><button class="chip" data-filter="niko and...">niko and...（1）</button><button class="chip" data-filter="non-hedge">non-hedge（1）</button><button class="chip" data-filter="one after another NICE CLAUP">one after another NICE CLAUP（1）</button></div>
 </nav>
 
 <main class="wrap">
-    <section class="brand-group" data-brand="MARKEY&#x27;S">
-      <h2 class="brand-title">MARKEY&#x27;S <span class="count">3</span></h2>
-      <div class="cards-grid">
-      <article class="card" data-brand="MARKEY&#x27;S">
-        <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
-          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
-        </button>
-        <div class="card-body">
-          <div class="card-pair">
-          <div class="pair-row pair-haha">
-            <span class="pair-label">hahababy</span>
-            <div class="pair-main">
-              <span class="pair-name">極簡系列-兒童三重紗細肩洋裝</span>
-              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%85%92%E7%AB%A5%E4%B8%89%E9%87%8D%E7%B4%97%E7%B4%B0%E8%82%A9%E6%B4%8B%E8%A3%9D" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          <div class="pair-row pair-brand">
-            <span class="pair-label">MARKEY&#x27;S</span>
-            <div class="pair-main">
-              <span class="pair-name">Wガーゼキャミワンピース</span>
-              <a class="pair-link" href="https://markeys-online.jp/c/onepiece/c-9311" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          </div>
-          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a></p>
-        </div>
-      </article>
-      <article class="card" data-brand="MARKEY&#x27;S">
-        <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
-          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-大人三重紗細肩洋裝">
-        </button>
-        <div class="card-body">
-          <div class="card-pair">
-          <div class="pair-row pair-haha">
-            <span class="pair-label">hahababy</span>
-            <div class="pair-main">
-              <span class="pair-name">極簡系列-大人三重紗細肩洋裝</span>
-              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%A4%A7%E4%BA%BA%E4%B8%89%E9%87%8D%E7%B4%97%E7%B4%B0%E8%82%A9%E6%B4%8B%E8%A3%9D" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          <div class="pair-row pair-brand">
-            <span class="pair-label">MARKEY&#x27;S</span>
-            <div class="pair-main">
-              <span class="pair-name">Wガーゼキャミワンピース</span>
-              <a class="pair-link" href="https://markeys-online.jp/c/onepiece/c-9311" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          </div>
-          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
-        </div>
-      </article>
-      <article class="card" data-brand="MARKEY&#x27;S">
-        <button class="card-image" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片">
-          <img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
-        </button>
-        <div class="card-body">
-          <div class="card-pair">
-          <div class="pair-row pair-haha">
-            <span class="pair-label">hahababy</span>
-            <div class="pair-main">
-              <span class="pair-name">極簡系列-兒童三重紗細肩洋裝</span>
-              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%85%92%E7%AB%A5%E4%B8%89%E9%87%8D%E7%B4%97%E7%B4%B0%E8%82%A9%E6%B4%8B%E8%A3%9D" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          <div class="pair-row pair-brand">
-            <span class="pair-label">MARKEY&#x27;S</span>
-            <div class="pair-main">
-              <span class="pair-name">Wガーゼキャミワンピース</span>
-              <a class="pair-link" href="https://markeys-online.jp/c/onepiece/c-9311" target="_blank" rel="noopener">商品頁 ↗</a>
-            </div>
-          </div>
-          </div>
-          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
-        </div>
-      </article>
-      </div>
-    </section>
     <section class="brand-group" data-brand="SOU・SOU">
       <h2 class="brand-title">SOU・SOU <span class="count">3</span></h2>
       <div class="cards-grid">
@@ -394,51 +338,52 @@ main { padding: 40px 0 20px; }
       </article>
       </div>
     </section>
-    <section class="brand-group" data-brand="HELLO.SANFRANCISCO">
-      <h2 class="brand-title">HELLO.SANFRANCISCO <span class="count">2</span></h2>
+    <section class="brand-group" data-brand="MARKEY&#x27;S">
+      <h2 class="brand-title">MARKEY&#x27;S <span class="count">2</span></h2>
       <div class="cards-grid">
-      <article class="card" data-brand="HELLO.SANFRANCISCO">
-        <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
+      <article class="card" data-brand="MARKEY&#x27;S">
+        <button class="card-image" data-full="images/743187035_17946576543238747_8443210900819452612_n.jpg" aria-label="放大檢視圖片">
+          <img src="images/743187035_17946576543238747_8443210900819452612_n.jpg" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝">
         </button>
+        <div class="thumb-row"><button class="thumb" data-full="images/742895921_18143626333496808_8634900192015078716_n.webp" aria-label="放大檢視圖片"><img src="images/742895921_18143626333496808_8634900192015078716_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-兒童三重紗細肩洋裝"></button></div>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
             <span class="pair-label">hahababy</span>
             <div class="pair-main">
-              <span class="pair-name">極簡系列-大人荷葉車邊喇叭長褲</span>
-              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%A4%A7%E4%BA%BA%E8%8D%B7%E8%91%89%E8%BB%8A%E9%82%8A%E5%96%87%E5%8F%AD%E9%95%B7%E8%A4%B2" target="_blank" rel="noopener">商品頁 ↗</a>
+              <span class="pair-name">極簡系列-兒童三重紗細肩洋裝</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%85%92%E7%AB%A5%E4%B8%89%E9%87%8D%E7%B4%97%E7%B4%B0%E8%82%A9%E6%B4%8B%E8%A3%9D" target="_blank" rel="noopener">商品頁 ↗</a>
             </div>
           </div>
           <div class="pair-row pair-brand">
-            <span class="pair-label">HELLO.SANFRANCISCO</span>
+            <span class="pair-label">MARKEY&#x27;S</span>
             <div class="pair-main">
-              <span class="pair-name">【HELLO.SANFRANCISCO】ワッフルフレアパンツ</span>
-              <a class="pair-link" href="https://zozo.jp/shop/ciaopanictypy/goods/93064663/?did=155291885&amp;rid=3123" target="_blank" rel="noopener">商品頁 ↗</a>
+              <span class="pair-name">Wガーゼキャミワンピース</span>
+              <a class="pair-link" href="https://markeys-online.jp/c/onepiece/c-9311" target="_blank" rel="noopener">商品頁 ↗</a>
             </div>
           </div>
           </div>
-          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@yyds200e/post/DaoIU0xE-8X" target="_blank" rel="noopener">@yyds200e</a>、<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
         </div>
       </article>
-      <article class="card" data-brand="HELLO.SANFRANCISCO">
-        <button class="card-image" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片">
-          <img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
+      <article class="card" data-brand="MARKEY&#x27;S">
+        <button class="card-image" data-full="images/741693668_18143626372496808_8743714777946279870_n.webp" aria-label="放大檢視圖片">
+          <img src="images/741693668_18143626372496808_8743714777946279870_n.webp" loading="lazy" alt="MARKEY&#x27;S vs hahababy：極簡系列-大人三重紗細肩洋裝">
         </button>
         <div class="card-body">
           <div class="card-pair">
           <div class="pair-row pair-haha">
             <span class="pair-label">hahababy</span>
             <div class="pair-main">
-              <span class="pair-name">極簡系列-大人荷葉車邊喇叭長褲</span>
-              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%A4%A7%E4%BA%BA%E8%8D%B7%E8%91%89%E8%BB%8A%E9%82%8A%E5%96%87%E5%8F%AD%E9%95%B7%E8%A4%B2" target="_blank" rel="noopener">商品頁 ↗</a>
+              <span class="pair-name">極簡系列-大人三重紗細肩洋裝</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%A4%A7%E4%BA%BA%E4%B8%89%E9%87%8D%E7%B4%97%E7%B4%B0%E8%82%A9%E6%B4%8B%E8%A3%9D" target="_blank" rel="noopener">商品頁 ↗</a>
             </div>
           </div>
           <div class="pair-row pair-brand">
-            <span class="pair-label">HELLO.SANFRANCISCO</span>
+            <span class="pair-label">MARKEY&#x27;S</span>
             <div class="pair-main">
-              <span class="pair-name">【HELLO.SANFRANCISCO】ワッフルフレアパンツ</span>
-              <a class="pair-link" href="https://zozo.jp/shop/ciaopanictypy/goods/93064663/?did=150556278" target="_blank" rel="noopener">商品頁 ↗</a>
+              <span class="pair-name">Wガーゼキャミワンピース</span>
+              <a class="pair-link" href="https://markeys-online.jp/c/onepiece/c-9311" target="_blank" rel="noopener">商品頁 ↗</a>
             </div>
           </div>
           </div>
@@ -696,6 +641,36 @@ main { padding: 40px 0 20px; }
       </article>
       </div>
     </section>
+    <section class="brand-group" data-brand="HELLO.SANFRANCISCO">
+      <h2 class="brand-title">HELLO.SANFRANCISCO <span class="count">1</span></h2>
+      <div class="cards-grid">
+      <article class="card" data-brand="HELLO.SANFRANCISCO">
+        <button class="card-image" data-full="images/743016956_18143626345496808_4670318385133592849_n.webp" aria-label="放大檢視圖片">
+          <img src="images/743016956_18143626345496808_4670318385133592849_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲">
+        </button>
+        <div class="thumb-row"><button class="thumb" data-full="images/743811477_18143626393496808_9051821953287898627_n.webp" aria-label="放大檢視圖片"><img src="images/743811477_18143626393496808_9051821953287898627_n.webp" loading="lazy" alt="HELLO.SANFRANCISCO vs hahababy：極簡系列-大人荷葉車邊喇叭長褲"></button></div>
+        <div class="card-body">
+          <div class="card-pair">
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">極簡系列-大人荷葉車邊喇叭長褲</span>
+              <a class="pair-link" href="https://www.hahababyselect.com/products/%E6%A5%B5%E7%B0%A1%E7%B3%BB%E5%88%97-%E5%A4%A7%E4%BA%BA%E8%8D%B7%E8%91%89%E8%BB%8A%E9%82%8A%E5%96%87%E5%8F%AD%E9%95%B7%E8%A4%B2" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          <div class="pair-row pair-brand">
+            <span class="pair-label">HELLO.SANFRANCISCO</span>
+            <div class="pair-main">
+              <span class="pair-name">【HELLO.SANFRANCISCO】ワッフルフレアパンツ</span>
+              <a class="pair-link" href="https://zozo.jp/shop/ciaopanictypy/goods/93064663/?did=155291885&amp;rid=3123" target="_blank" rel="noopener">商品頁 ↗</a>
+            </div>
+          </div>
+          </div>
+          <p class="card-provider">來源/提供者：<a href="https://www.threads.com/@icelandcatreborn/post/DapKwwKk9Ln" target="_blank" rel="noopener">@icelandcatreborn</a></p>
+        </div>
+      </article>
+      </div>
+    </section>
     <section class="brand-group" data-brand="Mari&amp;co">
       <h2 class="brand-title">Mari&amp;co <span class="count">1</span></h2>
       <div class="cards-grid">
@@ -946,7 +921,7 @@ document.addEventListener('click', function (e) {
     });
     return;
   }
-  var imgBtn = e.target.closest('.card-image');
+  var imgBtn = e.target.closest('.card-image, .thumb');
   if (imgBtn) {
     var full = imgBtn.getAttribute('data-full');
     var lb = document.getElementById('lightbox');

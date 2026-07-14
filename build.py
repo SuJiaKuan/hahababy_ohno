@@ -44,15 +44,53 @@ def pair_row(label, name, url, css_class):
           </div>"""
 
 
-def card_html(row):
-    img = esc(row["image"])
-    brand = row["brand"]
-    brand_item = row.get("brand_item_name", "")
-    brand_url = row.get("brand_product_url", "")
-    haha_item = row.get("hahababy_item_name", "")
-    haha_url = row.get("hahababy_product_url", "")
-    source = esc(row.get("source", ""))
-    source_url = row.get("source_url", "").strip()
+def group_into_cases(rows):
+    """Merge rows that describe the same real-world comparison (same brand,
+    same hahababy item, same brand item) submitted by different sources.
+    Rows with no item names on either side can't be reliably matched, so
+    each stays its own case."""
+    order = []
+    cases = {}
+    for row in rows:
+        brand = (row.get("brand") or "").strip()
+        haha_item = (row.get("hahababy_item_name") or "").strip()
+        brand_item = (row.get("brand_item_name") or "").strip()
+        key = (brand, haha_item, brand_item) if (haha_item or brand_item) else ("__unique__", row["image"])
+
+        if key not in cases:
+            cases[key] = {
+                "brand": brand,
+                "brand_item_name": brand_item,
+                "brand_product_url": (row.get("brand_product_url") or "").strip(),
+                "hahababy_item_name": haha_item,
+                "hahababy_product_url": (row.get("hahababy_product_url") or "").strip(),
+                "images": [],
+                "sources": [],
+            }
+            order.append(key)
+
+        case = cases[key]
+        case["images"].append(row["image"])
+        if not case["brand_product_url"]:
+            case["brand_product_url"] = (row.get("brand_product_url") or "").strip()
+        if not case["hahababy_product_url"]:
+            case["hahababy_product_url"] = (row.get("hahababy_product_url") or "").strip()
+
+        src = ((row.get("source") or "").strip(), (row.get("source_url") or "").strip())
+        if (src[0] or src[1]) and src not in case["sources"]:
+            case["sources"].append(src)
+
+    return [cases[k] for k in order]
+
+
+def card_html(case):
+    images = case["images"]
+    cover = esc(images[0])
+    brand = case["brand"]
+    brand_item = case["brand_item_name"]
+    brand_url = case["brand_product_url"]
+    haha_item = case["hahababy_item_name"]
+    haha_url = case["hahababy_product_url"]
 
     alt = esc(f"{brand} vs hahababy：{haha_item or brand_item or ''}".strip())
 
@@ -61,33 +99,44 @@ def card_html(row):
     if not rows_html:
         rows_html = '\n          <p class="pair-empty">尚未找到商品名稱與連結</p>'
 
-    source_html = (
-        f'<a href="{esc(source_url)}" target="_blank" rel="noopener">@{source}</a>'
-        if source_url else f"@{source}"
-    )
+    thumbs_html = ""
+    if len(images) > 1:
+        thumbs = "".join(
+            f'<button class="thumb" data-full="images/{esc(img)}" aria-label="放大檢視圖片">'
+            f'<img src="images/{esc(img)}" loading="lazy" alt="{alt}"></button>'
+            for img in images[1:]
+        )
+        thumbs_html = f'\n        <div class="thumb-row">{thumbs}</div>'
+
+    sources_html = "、".join(
+        (f'<a href="{esc(u)}" target="_blank" rel="noopener">@{esc(s)}</a>' if u else f"@{esc(s)}")
+        for s, u in case["sources"]
+    ) or "—"
 
     return f"""
-      <article class="card" data-brand="{esc(row['brand'])}">
-        <button class="card-image" data-full="images/{img}" aria-label="放大檢視圖片">
-          <img src="images/{img}" loading="lazy" alt="{alt}">
-        </button>
+      <article class="card" data-brand="{esc(brand)}">
+        <button class="card-image" data-full="images/{cover}" aria-label="放大檢視圖片">
+          <img src="images/{cover}" loading="lazy" alt="{alt}">
+        </button>{thumbs_html}
         <div class="card-body">
           <div class="card-pair">{rows_html}
           </div>
-          <p class="card-provider">來源/提供者：{source_html}</p>
+          <p class="card-provider">來源/提供者：{sources_html}</p>
         </div>
       </article>"""
 
 
 def build():
     rows = load_rows()
+    cases = group_into_cases(rows)
+
     by_brand = defaultdict(list)
-    for row in rows:
-        by_brand[row["brand"]].append(row)
+    for case in cases:
+        by_brand[case["brand"]].append(case)
 
     # sort brands by number of cases desc, then name
     brand_order = sorted(by_brand.keys(), key=lambda b: (-len(by_brand[b]), b))
-    total = len(rows)
+    total = len(cases)
     brand_count = len(by_brand)
 
     chips = ['<button class="chip active" data-filter="all">全部（' + str(total) + '）</button>']
@@ -99,7 +148,7 @@ def build():
     sections = []
     for b in brand_order:
         items = by_brand[b]
-        cards = "".join(card_html(r) for r in items)
+        cards = "".join(card_html(c) for c in items)
         sections.append(f"""
     <section class="brand-group" data-brand="{esc(b)}">
       <h2 class="brand-title">{esc(b)} <span class="count">{len(items)}</span></h2>
@@ -298,6 +347,27 @@ main { padding: 40px 0 20px; }
   transition: transform .25s;
 }
 .card-image:hover img { transform: scale(1.03); }
+
+.thumb-row {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px 0;
+  overflow-x: auto;
+}
+.thumb {
+  flex: 0 0 auto;
+  width: 44px;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-alt);
+  cursor: zoom-in;
+}
+.thumb:hover { border-color: var(--accent); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
 .card-pair { display: flex; flex-direction: column; gap: 8px; }
@@ -385,7 +455,7 @@ document.addEventListener('click', function (e) {
     });
     return;
   }
-  var imgBtn = e.target.closest('.card-image');
+  var imgBtn = e.target.closest('.card-image, .thumb');
   if (imgBtn) {
     var full = imgBtn.getAttribute('data-full');
     var lb = document.getElementById('lightbox');
