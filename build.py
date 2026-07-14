@@ -118,7 +118,7 @@ def card_html(case):
     sources_html = "、".join(
         (f'<a href="{esc(u)}" target="_blank" rel="noopener">@{esc(s)}</a>' if u else f"@{esc(s)}")
         for s, u in case["sources"]
-    ) or "—"
+    ) or "-"
 
     return f"""
       <article class="card" data-brand="{esc(brand)}">
@@ -173,7 +173,10 @@ def build():
   <div class="wrap">
     <h1>hahababy 對照牆</h1>
     <p class="subtitle">本站彙整自 Threads 等公開社群上網友分享的設計對照案例，供社會大眾檢視與討論。<br>資料持續更新中。</p>
-    <p class="stats">共 <strong>{total}</strong> 筆案例・涉及 <strong>{brand_count}</strong> 個品牌</p>
+    <div class="stats">
+      <div><strong>{total}</strong><span>筆案例</span></div>
+      <div><strong>{brand_count}</strong><span>個品牌</span></div>
+    </div>
   </div>
 </header>
 
@@ -212,29 +215,33 @@ def build():
 CSS = """
 :root {
   color-scheme: light dark;
-  --bg: #faf7f2;
-  --bg-alt: #f1ece3;
-  --text: #2b2622;
-  --text-muted: #746b60;
-  --border: #e2d9cb;
+  --bg: #f7f7f8;
+  --bg-alt: #eeeef1;
+  --text: #17171a;
+  --text-muted: #6c6c74;
+  --border: #e1e1e5;
   --card-bg: #ffffff;
-  --accent: #c0432e;
-  --accent-soft: #f3dcd5;
+  --accent: #d81e3f;
+  --accent-strong: #d81e3f;
+  --accent-soft: #fbe3e7;
   --chip-bg: #ffffff;
-  --shadow: 0 1px 2px rgba(43,38,34,.06), 0 8px 24px rgba(43,38,34,.06);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow: 0 1px 2px rgba(15,15,18,.05), 0 10px 30px rgba(15,15,18,.07);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1a18;
-    --bg-alt: #242220;
-    --text: #f1ece4;
-    --text-muted: #a89e91;
-    --border: #38332c;
-    --card-bg: #262320;
-    --accent: #e2725b;
-    --accent-soft: #3a2620;
-    --chip-bg: #262320;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    --bg: #0d0d0f;
+    --bg-alt: #1a1a1e;
+    --text: #f2f2f4;
+    --text-muted: #9c9ca3;
+    --border: #2a2a2f;
+    --card-bg: #19191c;
+    --accent: #ff5470;
+    --accent-strong: #d81e3f;
+    --accent-soft: #3a1620;
+    --chip-bg: #19191c;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
   }
 }
 * { box-sizing: border-box; }
@@ -248,27 +255,36 @@ body {
 .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 
 .site-header {
-  padding: 56px 0 32px;
-  text-align: center;
+  padding: 52px 0 28px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-alt);
 }
 .site-header h1 {
-  margin: 0 0 12px;
-  font-size: clamp(28px, 4vw, 40px);
-  letter-spacing: .01em;
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4.2vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.01em;
 }
 .site-header .subtitle {
-  margin: 0 auto 16px;
-  max-width: 620px;
+  margin: 0 0 18px;
+  max-width: 560px;
   color: var(--text-muted);
   font-size: 15px;
 }
 .site-header .stats {
-  font-size: 14px;
+  display: inline-flex;
+  gap: 20px;
+  font-size: 13px;
   color: var(--text-muted);
 }
-.site-header .stats strong { color: var(--accent); }
+.site-header .stats strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.01em;
+}
+.site-header .stats span { display: block; }
 
 .brand-filter {
   position: sticky;
@@ -296,8 +312,8 @@ body {
 }
 .chip:hover { border-color: var(--accent); }
 .chip.active {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
   color: #fff;
 }
 
@@ -311,7 +327,7 @@ main { padding: 40px 0 20px; }
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow);
   display: flex;
@@ -355,13 +371,13 @@ main { padding: 40px 0 20px; }
   top: 10px;
   left: 10px;
   z-index: 2;
-  background: rgba(28, 26, 24, .78);
+  background: rgba(12, 12, 15, .78);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .02em;
   padding: 5px 10px;
-  border-radius: 6px;
+  border-radius: 999px;
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
   max-width: calc(100% - 20px);
   overflow: hidden;
@@ -378,7 +394,7 @@ main { padding: 40px 0 20px; }
   height: 32px;
   border: 0;
   border-radius: 50%;
-  background: rgba(20, 18, 16, .55);
+  background: rgba(12, 12, 15, .55);
   color: #fff;
   font-size: 18px;
   line-height: 1;
@@ -387,7 +403,7 @@ main { padding: 40px 0 20px; }
   justify-content: center;
   cursor: pointer;
 }
-.carousel-arrow:hover { background: rgba(20, 18, 16, .8); }
+.carousel-arrow:hover { background: rgba(12, 12, 15, .8); }
 .carousel-arrow.prev { left: 8px; }
 .carousel-arrow.next { right: 8px; }
 
@@ -401,7 +417,7 @@ main { padding: 40px 0 20px; }
   gap: 6px;
   padding: 5px 8px;
   border-radius: 999px;
-  background: rgba(20, 18, 16, .45);
+  background: rgba(12, 12, 15, .45);
 }
 .dot {
   width: 6px;
@@ -423,11 +439,11 @@ main { padding: 40px 0 20px; }
   flex-direction: column;
   gap: 5px;
   padding: 9px 11px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--bg-alt);
   border: 1px solid var(--border);
 }
-.pair-row.pair-haha { border-color: var(--accent-soft); }
+.pair-row.pair-haha { border-color: var(--accent-soft); background: var(--accent-soft); }
 .pair-label {
   display: inline-block;
   align-self: flex-start;
@@ -438,8 +454,8 @@ main { padding: 40px 0 20px; }
   color: var(--text-muted);
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 1px 6px;
+  border-radius: 999px;
+  padding: 1px 8px;
 }
 .pair-haha .pair-label { color: var(--accent); border-color: var(--accent-soft); }
 .pair-main {
@@ -485,7 +501,7 @@ main { padding: 40px 0 20px; }
 .lightbox img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 20px 60px rgba(0,0,0,.5);
   touch-action: pan-y;
   user-select: none;
