@@ -110,6 +110,15 @@ mark {
   font-weight: 900;
   margin: 0 2px;
 }
+@media (max-width: 700px) {
+  .site-header { padding-top: 20px; }
+  .site-header .wrap { padding-bottom: 12px; }
+  .tabloid-headline { margin-bottom: 8px; }
+  .tabloid-deck { font-size: 14px; }
+  .tabloid-band { padding: 5px 24px; font-size: 12px; }
+  .tabloid-ticker .wrap { padding-top: 8px; padding-bottom: 8px; font-size: 13px; }
+  .tabloid-ticker strong { font-size: 19px; }
+}
 
 .brand-filter {
   position: sticky;
@@ -123,6 +132,16 @@ mark {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+@media (max-width: 700px) {
+  .brand-filter { padding: 10px 0; }
+  .chip-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; }
 }
 .chip {
   border: 1px solid var(--border);
