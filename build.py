@@ -172,7 +172,7 @@ def build():
 <header class="site-header">
   <div class="wrap">
     <h1>hahababy 對照牆</h1>
-    <p class="subtitle">網友自主蒐集整理的設計對照案例，供社會大眾檢視與討論。資料持續更新中。</p>
+    <p class="subtitle">本站彙整自 Threads 等公開社群上網友分享的設計對照案例，供社會大眾檢視與討論。<br>資料持續更新中。</p>
     <p class="stats">共 <strong>{total}</strong> 筆案例・涉及 <strong>{brand_count}</strong> 個品牌</p>
   </div>
 </header>
@@ -188,7 +188,7 @@ def build():
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>本頁內容由網友於 Threads 等公開社群自主蒐集、整理與提供，僅作為消費者知情與公共討論用途，不代表本站對任何品牌之侵權指控做出法律判斷。圖片著作權屬原拍攝者／品牌所有。如有錯誤或需下架，請聯繫更正。</p>
+    <p>本頁圖片彙整自 Threads 等公開社群上網友分享的貼文，僅作為大眾知情與公共討論用途，不代表本站對任何品牌之侵權指控做出法律判斷。圖片著作權屬原拍攝者／品牌所有。如內容有誤、需要下架，或想提供更多案例，歡迎透過 Threads 聯繫：<a href="https://www.threads.com/@feabries" target="_blank" rel="noopener">@feabries</a>。</p>
   </div>
 </footer>
 
@@ -468,6 +468,7 @@ main { padding: 40px 0 20px; }
   color: var(--text-muted);
   font-size: 12.5px;
 }
+.site-footer a { color: var(--accent); }
 
 .lightbox {
   position: fixed;
