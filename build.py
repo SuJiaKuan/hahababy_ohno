@@ -180,7 +180,7 @@ def build():
     <h1 class="tabloid-headline">hahababy 撞臉全紀錄</h1>
     <p class="tabloid-deck">越比對，越眼熟？</p>
   </div>
-  <div class="tabloid-band">眼尖網友回報中，持續更新</div>
+  <div class="tabloid-band"><div class="wrap">眼尖網友回報中，持續更新</div></div>
   <div class="tabloid-ticker">
     <div class="wrap">
       網友揪出 <strong>{total}</strong> 起，橫跨 <strong>{brand_count}</strong> 個品牌
@@ -298,13 +298,13 @@ mark {
 .tabloid-band {
   background: var(--yellow);
   color: #000;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: .03em;
-  padding: 7px 24px;
   border-top: 2px solid var(--text);
   border-bottom: 2px solid var(--text);
 }
+.tabloid-band .wrap { padding-top: 7px; padding-bottom: 7px; }
 .tabloid-ticker {
   background: var(--text);
   color: var(--bg);
@@ -326,7 +326,8 @@ mark {
   .site-header .wrap { padding-bottom: 12px; }
   .tabloid-headline { margin-bottom: 8px; }
   .tabloid-deck { font-size: 14px; }
-  .tabloid-band { padding: 5px 24px; font-size: 12px; }
+  .tabloid-band { font-size: 13px; }
+  .tabloid-band .wrap { padding-top: 5px; padding-bottom: 5px; }
   .tabloid-ticker .wrap { padding-top: 8px; padding-bottom: 8px; font-size: 13px; }
   .tabloid-ticker strong { font-size: 19px; }
 }
@@ -360,7 +361,7 @@ mark {
   color: var(--text);
   padding: 6px 14px;
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .02em;
@@ -437,7 +438,7 @@ main { padding: 40px 0 20px; }
   background: #000;
   color: var(--yellow);
   border: 1.5px solid var(--yellow);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: .02em;
   padding: 4px 10px;
@@ -529,7 +530,7 @@ main { padding: 40px 0 20px; }
 .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
 .card-pair { display: flex; flex-direction: column; gap: 8px; }
-.pair-empty { margin: 0; font-size: 12.5px; color: var(--text-muted); }
+.pair-empty { margin: 0; font-size: 13.5px; color: var(--text-muted); }
 .pair-row {
   display: flex;
   flex-direction: column;
@@ -546,7 +547,7 @@ main { padding: 40px 0 20px; }
 .pair-label {
   display: inline-block;
   align-self: flex-start;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: .03em;
   text-transform: uppercase;
@@ -568,17 +569,17 @@ main { padding: 40px 0 20px; }
   column-gap: 8px;
   row-gap: 2px;
 }
-.pair-name { font-size: 13.5px; line-height: 1.45; word-break: break-word; }
-.pair-name--empty { color: var(--text-muted); font-style: italic; font-size: 12px; }
+.pair-name { font-size: 14.5px; line-height: 1.45; word-break: break-word; }
+.pair-name--empty { color: var(--text-muted); font-style: italic; font-size: 13px; }
 .pair-link {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
 }
 .pair-link:hover { text-decoration: underline; }
 
-.card-provider { margin: 0; font-size: 12px; color: var(--text-muted); }
+.card-provider { margin: 0; font-size: 13px; color: var(--text-muted); }
 .card-provider a { color: var(--text-muted); }
 
 .site-footer {
