@@ -126,7 +126,6 @@ def card_html(case):
       <article class="card" data-brand="{esc(brand)}">
         <div class="card-image" data-index="0">
           <span class="brand-badge">{esc(brand)}</span>
-          <span class="suspect-ribbon">疑似</span>
           {slides_html}
           <button class="cover-btn" aria-label="放大檢視圖片"></button>{nav_html}
         </div>
@@ -448,24 +447,6 @@ main { padding: 40px 0 20px; }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.suspect-ribbon {
-  position: absolute;
-  top: 16px;
-  right: -32px;
-  z-index: 2;
-  width: 128px;
-  padding: 3px 0;
-  background: var(--accent-strong);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: .15em;
-  text-align: center;
-  transform: rotate(45deg);
-  box-shadow: 0 2px 6px rgba(0,0,0,.35);
-  border-top: 1px solid rgba(255,255,255,.5);
-  border-bottom: 1px solid rgba(255,255,255,.5);
 }
 .vs-badge {
   align-self: center;
