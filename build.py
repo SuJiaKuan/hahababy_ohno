@@ -44,6 +44,52 @@ def pair_row(label, name, url, css_class):
           </div>"""
 
 
+def haha_status_html(case):
+    if case["removed"] or not case["hahababy_product_url_official"]:
+        return '<span class="pair-tag pair-tag--removed">官方商品頁已下架</span>'
+    return ""
+
+
+def haha_links_html(case):
+    official_url = case["hahababy_product_url_official"]
+    snapshot_url = case["snapshot_url"]
+    shopee_url = case["hahababy_product_url_shopee"]
+    social_url = case["hahababy_product_url_social"]
+
+    parts = []
+    if case["removed"] or not official_url:
+        if snapshot_url:
+            parts.append(f'<a class="pair-link" href="{esc(snapshot_url)}" target="_blank" rel="noopener">官方商品頁備份 ↗</a>')
+    else:
+        parts.append(f'<a class="pair-link" href="{esc(official_url)}" target="_blank" rel="noopener">官方商品頁 ↗</a>')
+
+    if shopee_url:
+        parts.append(f'<a class="pair-link" href="{esc(shopee_url)}" target="_blank" rel="noopener">蝦皮商品頁 ↗</a>')
+
+    if social_url:
+        parts.append(f'<a class="pair-link" href="{esc(social_url)}" target="_blank" rel="noopener">社群貼文連結 ↗</a>')
+
+    return "".join(parts)
+
+
+def haha_pair_row(case):
+    name = (case["hahababy_item_name"] or "").strip()
+    status_html = haha_status_html(case)
+    links_html = haha_links_html(case)
+    if not name and not status_html and not links_html:
+        return ""
+    name_html = esc(name) if name else '<span class="pair-name--empty">（品名待補）</span>'
+    links_block = f'\n            <div class="pair-links">{links_html}</div>' if links_html else ""
+    return f"""
+          <div class="pair-row pair-haha">
+            <span class="pair-label">hahababy</span>
+            <div class="pair-main">
+              <span class="pair-name">{name_html}</span>
+              {status_html}
+            </div>{links_block}
+          </div>"""
+
+
 def group_into_cases(rows):
     """Merge rows that describe the same real-world comparison (same brand,
     same hahababy item, same brand item) submitted by different sources.
@@ -63,7 +109,11 @@ def group_into_cases(rows):
                 "brand_item_name": brand_item,
                 "brand_product_url": (row.get("brand_product_url") or "").strip(),
                 "hahababy_item_name": haha_item,
-                "hahababy_product_url": (row.get("hahababy_product_url") or "").strip(),
+                "hahababy_product_url_official": (row.get("hahababy_product_url_official") or "").strip(),
+                "hahababy_product_url_shopee": (row.get("hahababy_product_url_shopee") or "").strip(),
+                "hahababy_product_url_social": (row.get("hahababy_product_url_social") or "").strip(),
+                "removed": False,
+                "snapshot_url": (row.get("snapshot_url") or "").strip(),
                 "images": [],
                 "sources": [],
             }
@@ -73,8 +123,16 @@ def group_into_cases(rows):
         case["images"].append(row["image"])
         if not case["brand_product_url"]:
             case["brand_product_url"] = (row.get("brand_product_url") or "").strip()
-        if not case["hahababy_product_url"]:
-            case["hahababy_product_url"] = (row.get("hahababy_product_url") or "").strip()
+        if not case["hahababy_product_url_official"]:
+            case["hahababy_product_url_official"] = (row.get("hahababy_product_url_official") or "").strip()
+        if not case["hahababy_product_url_shopee"]:
+            case["hahababy_product_url_shopee"] = (row.get("hahababy_product_url_shopee") or "").strip()
+        if not case["hahababy_product_url_social"]:
+            case["hahababy_product_url_social"] = (row.get("hahababy_product_url_social") or "").strip()
+        if not case["snapshot_url"]:
+            case["snapshot_url"] = (row.get("snapshot_url") or "").strip()
+        if (row.get("removed") or "").strip() == "1":
+            case["removed"] = True
 
         src = ((row.get("source") or "").strip(), (row.get("source_url") or "").strip())
         if (src[0] or src[1]) and src not in case["sources"]:
@@ -90,11 +148,10 @@ def card_html(case):
     brand_item = case["brand_item_name"]
     brand_url = case["brand_product_url"]
     haha_item = case["hahababy_item_name"]
-    haha_url = case["hahababy_product_url"]
 
     alt = esc(f"{brand} vs hahababy：{haha_item or brand_item or ''}".strip())
 
-    haha_row = pair_row("hahababy", haha_item, haha_url, "pair-haha")
+    haha_row = haha_pair_row(case)
     brand_row = pair_row(esc(brand), brand_item, brand_url, "pair-brand")
     vs_html = '\n          <div class="vs-badge">VS</div>' if haha_row and brand_row else ""
     rows_html = haha_row + vs_html + brand_row
@@ -552,6 +609,14 @@ main { padding: 40px 0 20px; }
 }
 .pair-name { font-size: 14.5px; line-height: 1.45; word-break: break-word; }
 .pair-name--empty { color: var(--text-muted); font-style: italic; font-size: 13px; }
+.pair-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  row-gap: 4px;
+  margin-top: 4px;
+}
 .pair-link {
   font-size: 13px;
   color: var(--accent);
@@ -559,6 +624,14 @@ main { padding: 40px 0 20px; }
   white-space: nowrap;
 }
 .pair-link:hover { text-decoration: underline; }
+.pair-tag {
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pair-tag--removed {
+  color: var(--accent);
+}
 
 .card-provider { margin: 0; font-size: 13px; color: var(--text-muted); }
 .card-provider a { color: var(--text-muted); }
