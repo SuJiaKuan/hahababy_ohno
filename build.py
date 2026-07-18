@@ -174,10 +174,12 @@ def card_html(case):
           <button class="carousel-arrow next" aria-label="下一張">›</button>
           <div class="carousel-dots">{dots}</div>"""
 
-    sources_html = "、".join(
-        (f'<a href="{esc(u)}" target="_blank" rel="noopener">@{esc(s)}</a>' if u else f"@{esc(s)}")
-        for s, u in case["sources"]
-    ) or "-"
+    def source_label(s, u):
+        if s == "ANONYMOUS":
+            return "匿名"
+        return f'<a href="{esc(u)}" target="_blank" rel="noopener">@{esc(s)}</a>' if u else f"@{esc(s)}"
+
+    sources_html = "、".join(source_label(s, u) for s, u in case["sources"]) or "-"
 
     return f"""
       <article class="card" data-brand="{esc(brand)}">
