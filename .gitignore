@@ -13,3 +13,6 @@ Thumbs.db
 
 # Product archive snapshots (screenshots/MHTML/images) - large, not version controlled
 /archive/
+
+# Login session cookies for the archiver - never commit these
+/scripts/auth/

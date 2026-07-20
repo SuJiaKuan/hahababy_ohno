@@ -36,6 +36,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).parent.parent
 ARCHIVE_ROOT = ROOT / "archive"
+STORAGE_STATE_PATH = ROOT / "scripts" / "auth" / "storage_state.json"
 
 sys.path.insert(0, str(ROOT))
 from build import group_into_cases, load_rows  # noqa: E402  (reuse existing CSV parsing/merge logic)
@@ -126,21 +127,44 @@ def trigger_lazy_load(page, viewport_height):
         pass
 
 
-def extract_image_candidates(page):
+def image_scope_selectors(url):
+    """Social platforms render the actual post plus an unrelated "more from
+    this account" grid on the same page. Scope image extraction to just the
+    post itself when we can recognize the container, to avoid pulling in
+    photos from other, unrelated posts."""
+    host = urllib.parse.urlparse(url).netloc.lower()
+    if "facebook.com" in host:
+        return ['[role="dialog"]', '[data-pagelet^="WatchPermalinkVideo"]', 'div[role="main"]']
+    if "instagram.com" in host:
+        return ['div[role="presentation"]', "main article", "article"]
+    return None
+
+
+def extract_image_candidates(page, root_selectors=None):
     """Read every plausible image URL straight from element attributes so we
     don't depend on whether the browser has actually finished loading it."""
-    raw = page.eval_on_selector_all(
-        "img",
-        """els => els.map(e => {
-            const srcset = e.getAttribute('srcset') || e.getAttribute('data-srcset') || '';
-            const parts = srcset.split(',').map(s => s.trim().split(/\\s+/)[0]).filter(Boolean);
-            return {
-                src: e.currentSrc || e.getAttribute('src') || '',
-                dataSrc: e.getAttribute('data-src') || e.getAttribute('data-original') || e.getAttribute('data-lazy-src') || '',
-                srcsetBest: parts.length ? parts[parts.length - 1] : '',
-                alt: e.alt || ''
-            };
-        })""",
+    raw = page.evaluate(
+        """(selectors) => {
+            let root = document;
+            if (selectors) {
+                for (const sel of selectors) {
+                    const found = document.querySelector(sel);
+                    if (found && found.querySelectorAll('img').length > 0) { root = found; break; }
+                }
+            }
+            const els = Array.from(root.querySelectorAll('img'));
+            return els.map(e => {
+                const srcset = e.getAttribute('srcset') || e.getAttribute('data-srcset') || '';
+                const parts = srcset.split(',').map(s => s.trim().split(/\\s+/)[0]).filter(Boolean);
+                return {
+                    src: e.currentSrc || e.getAttribute('src') || '',
+                    dataSrc: e.getAttribute('data-src') || e.getAttribute('data-original') || e.getAttribute('data-lazy-src') || '',
+                    srcsetBest: parts.length ? parts[parts.length - 1] : '',
+                    alt: e.alt || ''
+                };
+            });
+        }""",
+        root_selectors,
     )
     candidates = []
     for im in raw:
@@ -176,6 +200,14 @@ def is_product_like(d):
 
 
 BOT_WALL_HINTS = re.compile(r"(/verify/traffic|/verify/captcha|checkpoint|/_sec/|antibot)", re.I)
+VIDEO_HOST_HINTS = ("youtube.com", "youtu.be")
+
+
+def is_video_page(url):
+    """Video pages have no product photos in the DOM - only a player, related-
+    video thumbnails, and shopping-widget noise - so skip image extraction."""
+    host = urllib.parse.urlparse(url).netloc.lower()
+    return any(h in host for h in VIDEO_HOST_HINTS)
 
 
 def looks_like_homepage_redirect(original_url, final_url):
@@ -186,6 +218,41 @@ def looks_like_homepage_redirect(original_url, final_url):
     if orig.netloc != final.netloc:
         return False
     return bool(orig.path.rstrip("/")) and final.path.rstrip("/") == ""
+
+
+LOGIN_POPUP_CLOSE_SELECTORS = [
+    '[aria-label*="關閉" i]',
+    '[aria-label*="Close" i]',
+    '[aria-label*="close" i]',
+]
+
+
+def dismiss_login_popup(page, url):
+    """Instagram overlays a "log in to see more" modal on top of otherwise-
+    public content; close it so it doesn't show up in the screenshot and
+    stops blocking images from loading underneath. Facebook's permalink post
+    view is itself a dialog with its own close button (returns to the feed),
+    so the same "close any dialog" trick would destroy the content we came
+    for - only do this on Instagram, where the nag is a separate overlay."""
+    if "instagram.com" not in urllib.parse.urlparse(url).netloc.lower():
+        return False
+    dismissed = False
+    for sel in LOGIN_POPUP_CLOSE_SELECTORS:
+        try:
+            btn = page.locator(sel).first
+            if btn.is_visible(timeout=1000):
+                btn.click(timeout=1000)
+                page.wait_for_timeout(400)
+                dismissed = True
+                break
+        except Exception:  # noqa: BLE001
+            continue
+    try:
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(200)
+    except Exception:  # noqa: BLE001
+        pass
+    return dismissed
 
 
 def capture(page, context, url, out_dir, is_snapshot):
@@ -225,6 +292,7 @@ def capture(page, context, url, out_dir, is_snapshot):
         return meta
 
     trigger_lazy_load(page, page.viewport_size["height"] if page.viewport_size else 1600)
+    meta["login_popup_dismissed"] = dismiss_login_popup(page, url)
 
     meta["final_url"] = page.url
     meta["title"] = page.title()
@@ -243,7 +311,7 @@ def capture(page, context, url, out_dir, is_snapshot):
         meta["mhtml_error"] = str(e)
 
     try:
-        raw_candidates = [] if meta["blocked"] else extract_image_candidates(page)
+        raw_candidates = [] if meta["blocked"] or is_video_page(url) else extract_image_candidates(page, image_scope_selectors(url))
     except Exception:  # noqa: BLE001
         raw_candidates = []
 
@@ -314,22 +382,33 @@ def capture(page, context, url, out_dir, is_snapshot):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--only", help="only archive products whose name contains this substring")
+    ap.add_argument(
+        "--only",
+        action="append",
+        help="only archive products whose name contains this substring (repeatable for multiple products)",
+    )
     ap.add_argument("--headed", action="store_true", help="show the browser window")
     args = ap.parse_args()
 
     cases = group_into_cases(load_rows())
     ARCHIVE_ROOT.mkdir(exist_ok=True)
 
+    context_kwargs = dict(user_agent=UA, viewport={"width": 1280, "height": 1600}, locale="zh-TW")
+    if STORAGE_STATE_PATH.exists():
+        context_kwargs["storage_state"] = str(STORAGE_STATE_PATH)
+        print(f"Using logged-in session from {STORAGE_STATE_PATH}")
+    else:
+        print(f"No login session found at {STORAGE_STATE_PATH} - archiving as a guest.")
+
     summary = []
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not args.headed)
-        context = browser.new_context(user_agent=UA, viewport={"width": 1280, "height": 1600}, locale="zh-TW")
+        context = browser.new_context(**context_kwargs)
         page = context.new_page()
 
         for case in cases:
             name = case["hahababy_item_name"]
-            if args.only and args.only not in (name or ""):
+            if args.only and not any(sub in (name or "") for sub in args.only):
                 continue
             folder = safe_name(name, f"未命名商品_{case['images'][0]}")
             targets = target_list(case)
