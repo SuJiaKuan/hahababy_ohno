@@ -208,6 +208,9 @@ def build():
     brand_order = sorted(by_brand.keys(), key=lambda b: (-len(by_brand[b]), b))
     total = len(cases)
     brand_count = len(by_brand)
+    removed_count = sum(
+        1 for c in cases if c["removed"] or not c["hahababy_product_url_official"]
+    )
 
     chips = ['<button class="chip active" data-filter="all">全部（' + str(total) + '）</button>']
     for b in brand_order:
@@ -224,7 +227,7 @@ def build():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>hahababy 撞臉全紀錄</title>
-<meta name="description" content="網友蒐集整理的 hahababy 與其他品牌相似設計對照圖">
+<meta name="description" content="彙整網友蒐集整理的 hahababy 與其他品牌相似設計對照">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&text=%E6%92%9E%E8%87%89%E5%85%A8%E7%B4%80%E9%8C%84&display=swap" rel="stylesheet">
@@ -241,7 +244,7 @@ def build():
   <div class="tabloid-band"><div class="wrap">眼尖網友回報中，持續更新</div></div>
   <div class="tabloid-ticker">
     <div class="wrap">
-      網友揪出 <strong>{total}</strong> 起，橫跨 <strong>{brand_count}</strong> 個品牌
+      網友揪出 <strong>{total}</strong> 起，橫跨 <strong>{brand_count}</strong> 個品牌，其中 <strong>{removed_count}</strong> 件已下架
     </div>
   </div>
 </header>
@@ -275,7 +278,7 @@ def build():
 </html>
 """
     OUT_PATH.write_text(html_out, encoding="utf-8")
-    print(f"Wrote {OUT_PATH} ({total} cases, {brand_count} brands)")
+    print(f"Wrote {OUT_PATH} ({total} cases, {brand_count} brands, {removed_count} removed)")
 
 
 CSS = """
